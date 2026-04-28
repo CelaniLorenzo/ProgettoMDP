@@ -1,61 +1,89 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public class Personaggio {
-    protected String nome;
-    protected int vita;
-    protected int attacco;
-    protected int difesa;
+public abstract class Personaggio {
 
-    public Personaggio(String nome, int vita, int attacco, int difesa) {
+    private final String nome;
+    private int vita;
+    private int vitaMassima;
+    private final int attaccoBase;
+    private final int difesaBase;
+
+    public Personaggio(String nome, int vitaMassima, int attaccoBase, int difesaBase) {
         this.nome = nome;
-        this.vita = vita;
-        this.attacco = attacco;
-        this.difesa = difesa;
+        this.vitaMassima = vitaMassima;
+        this.vita = vitaMassima;
+        this.attaccoBase = attaccoBase;
+        this.difesaBase = difesaBase;
     }
 
-    public int lanciaDado() {
-        return (int)(Math.random() * 6) + 1;
-    }
-
-    public void attacca(Personaggio nemico) {
-        int dado = lanciaDado();
-
-        int danno = attacco + dado - nemico.difesa;
-        if (danno < 0) danno = 0;
-
-        if (dado == 6) {
-            danno *= 2;
-            System.out.println("💥 COLPO CRITICO!");
-        }
-
-        nemico.vita -= danno;
-
-        System.out.println(nome + " tira " + dado + " → danno: " + danno);
-    }
-
-    public void usaAbilita(Personaggio nemico) {
-        System.out.println(nome + " non ha abilità speciale.");
-    }
-
-    public void difendi() {
-        difesa += 5;
-        System.out.println(nome + " aumenta la difesa!");
-    }
-
-    public boolean isVivo() {
-        return vita > 0;
+    public String getNome() {
+        return nome;
     }
 
     public int getVita() {
         return vita;
     }
 
-    public void setVita(int vita) {
-        this.vita = vita;
+    public int getVitaMassima() {
+        return vitaMassima;
     }
 
-    public String getNome() {
-        return nome;
+    public int getAttaccoBase() {
+        return attaccoBase;
+    }
+
+    public int getDifesaBase() {
+        return difesaBase;
+    }
+
+    public boolean isVivo() {
+        return vita > 0;
+    }
+
+    public int attacca(Personaggio bersaglio) {
+        int danno = calcolaAttacco();
+        return bersaglio.riceviDanno(danno);
+    }
+
+    public int riceviDanno(int danno) {
+        int dannoEffettivo = danno - calcolaDifesa();
+
+        if (dannoEffettivo < 1) {
+            dannoEffettivo = 1;
+        }
+
+        vita -= dannoEffettivo;
+
+        if (vita < 0) {
+            vita = 0;
+        }
+
+        return dannoEffettivo;
+    }
+
+    protected int calcolaAttacco() {
+        return attaccoBase;
+    }
+
+    protected int calcolaDifesa() {
+        return difesaBase;
+    }
+
+    public void cura(int quantita) {
+        vita += quantita;
+
+        if (vita > vitaMassima) {
+            vita = vitaMassima;
+        }
+    }
+
+    protected void aumentaVitaMassima(int quantita) {
+        vitaMassima += quantita;
+        vita += quantita;
+    }
+
+    public String stato() {
+        return nome + " - Vita: " + vita + "/" + vitaMassima;
     }
 }
 
