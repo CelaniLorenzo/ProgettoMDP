@@ -1,153 +1,95 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-import java.util.Scanner;
-import java.util.Random;
-
 public class Combattimento {
 
-    private Random random = new Random();
+    private final Dado dado;
 
-    private int lanciaDado() {
-        return random.nextInt(6) + 1;
+    public Combattimento(Dado dado) {
+        this.dado = dado;
     }
 
-    private Personaggio scegliAttaccante(Personaggio[] squadra, Reattore reattore) {
+    public Personaggio combatti(Personaggio primo, Personaggio secondo) {
+        System.out.println();
+        System.out.println("Inizia il combattimento tra " + primo.getNome() + " e " + secondo.getNome());
+        System.out.println("--------------------------------");
 
-        while (true) {
+        while (primo.isVivo() && secondo.isVivo()) {
+            eseguiTurno(primo, secondo);
 
-            int max = -1;
-            Personaggio attaccante = null;
-            int conteggioMax = 0;
+            System.out.println(primo.stato());
+            System.out.println(secondo.stato());
+            System.out.println("--------------------------------");
+        }
 
-            for (Personaggio p : squadra) {
-                if (!p.isVivo()) continue;
-
-                int dado = lanciaDado();
-                System.out.println(p.getNome() + " tira: " + dado);
-
-                if (dado > max) {
-                    max = dado;
-                    attaccante = p;
-                    conteggioMax = 1;
-                } else if (dado == max) {
-                    conteggioMax++;
-                }
-            }
-
-            int dadoReattore = lanciaDado();
-            System.out.println("Reattore tira: " + dadoReattore);
-
-            if (dadoReattore > max) {
-                return reattore;
-            } else if (dadoReattore == max) {
-                conteggioMax++;
-            }
-
-            if (conteggioMax == 1) {
-                return attaccante;
-            }
-
-            System.out.println("⚖️ Pareggio! Si rilancia...\n");
+        if (primo.isVivo()) {
+            System.out.println(primo.getNome() + " ha vinto il combattimento!");
+            return primo;
+        } else {
+            System.out.println(secondo.getNome() + " ha vinto il combattimento!");
+            return secondo;
         }
     }
 
-    private void attaccoFinale(Personaggio[] squadra, Reattore reattore) {
+    private void eseguiTurno(Personaggio primo, Personaggio secondo) {
+        int tiroPrimo;
+        int tiroSecondo;
 
-        System.out.println(" ATTACCO FINALE COMBINATO!");
+        do {
+            tiroPrimo = dado.tira();
+            tiroSecondo = dado.tira();
 
-        int dannoTotale = 0;
+            System.out.println(primo.getNome() + " tira il dado: " + tiroPrimo);
+            System.out.println(secondo.getNome() + " tira il dado: " + tiroSecondo);
 
-        for (Personaggio p : squadra) {
-            if (p.isVivo()) {
-                int danno = p.attacco + p.lanciaDado();
-                dannoTotale += danno;
-                System.out.println(p.getNome() + " contribuisce: " + danno);
+            if (tiroPrimo == tiroSecondo) {
+                System.out.println("Pareggio! Si ritira il dado.");
             }
+
+        } while (tiroPrimo == tiroSecondo);
+
+        Personaggio attaccante;
+        Personaggio difensore;
+        int tiroVincente;
+
+        if (tiroPrimo > tiroSecondo) {
+            attaccante = primo;
+            difensore = secondo;
+            tiroVincente = tiroPrimo;
+        } else {
+            attaccante = secondo;
+            difensore = primo;
+            tiroVincente = tiroSecondo;
         }
 
-        reattore.setVita(reattore.getVita() - dannoTotale);
+        int numeroAttacchi = calcolaNumeroAttacchi(tiroVincente);
 
-        System.out.println("DANNO TOTALE: " + dannoTotale);
+        System.out.println(attaccante.getNome() + " attacca " + numeroAttacchi + " volta/e.");
+
+        for (int i = 1; i <= numeroAttacchi; i++) {
+            if (!difensore.isVivo()) {
+                break;
+            }
+
+            int danno = attaccante.attacca(difensore);
+
+            System.out.println(
+                    attaccante.getNome()
+                            + " colpisce "
+                            + difensore.getNome()
+                            + " causando "
+                            + danno
+                            + " danni."
+            );
+        }
     }
 
-    private Personaggio scegliBersaglio(Personaggio[] squadra) {
-
-        Personaggio bersaglio = null;
-
-        while (bersaglio == null) {
-            int index = random.nextInt(squadra.length);
-            if (squadra[index].isVivo()) {
-                bersaglio = squadra[index];
-            }
+    private int calcolaNumeroAttacchi(int tiroDado) {
+        if (tiroDado <= 2) {
+            return 1;
+        } else if (tiroDado <= 4) {
+            return 2;
+        } else {
+            return 3;
         }
-
-        return bersaglio;
-    }
-
-    public void avvia(Personaggio[] squadra, Reattore reattore) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== INIZIA IL COMBATTIMENTO ===");
-
-        while (reattore.isVivo()) {
-
-            if (reattore.checkAttaccoFinale()) {
-                System.out.println("Vuoi usare l'attacco finale? (1=Si, 2=No)");
-                int scelta = scanner.nextInt();
-
-                if (scelta == 1) {
-                    attaccoFinale(squadra, reattore);
-                    if (!reattore.isVivo()) break;
-                }
-            }
-
-            Personaggio attaccante = scegliAttaccante(squadra, reattore);
-
-            if (attaccante == reattore) {
-
-                reattore.controllaFuria();
-                Personaggio bersaglio = scegliBersaglio(squadra);
-
-                if (reattore.isFuria()) {
-                    reattore.attaccoTriplo(bersaglio);
-                } else {
-                    reattore.attacca(bersaglio);
-                }
-
-            } else {
-
-                System.out.println("\nTurno di " + attaccante.getNome());
-                System.out.println("1) Attacco  2) Abilità  3) Difendi");
-
-                int scelta = scanner.nextInt();
-
-                if (scelta == 1) attaccante.attacca(reattore);
-                else if (scelta == 2) attaccante.usaAbilita(reattore);
-                else attaccante.difendi();
-
-                reattore.registraColpo(attaccante);
-            }
-
-            reattore.resetTurno();
-
-            boolean tuttiMorti = true;
-
-            for (Personaggio p : squadra) {
-                if (p.isVivo()) {
-                    tuttiMorti = false;
-                    break;
-                }
-            }
-
-            if (tuttiMorti) {
-                System.out.println("GAME OVER");
-                scanner.close();
-                return;
-            }
-        }
-
-        System.out.println("=== VITTORIA ===");
-        scanner.close();
     }
 }
