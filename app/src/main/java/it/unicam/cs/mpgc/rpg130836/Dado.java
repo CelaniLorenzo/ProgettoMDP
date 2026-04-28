@@ -7,6 +7,9 @@ public class Dado {
     private final Random random;
 
     public Dado(int facce) {
+        if (facce <= 0) {
+            throw new IllegalArgumentException("Il dado deve avere almeno una faccia");
+        }
         this.facce = facce;
         this.random = new Random();
     }
@@ -15,3 +18,7 @@ public class Dado {
         return random.nextInt(facce) + 1;
     }
 }
+
+
+
+
