@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public abstract class Personaggio {
+public abstract class Personaggio implements Combattente {
 
     private final String nome;
     private int vita;
@@ -15,7 +15,7 @@ public abstract class Personaggio {
         this.attaccoBase = attaccoBase;
         this.difesaBase = difesaBase;
     }
-
+    @Override
     public String getNome() {
         return nome;
     }
@@ -35,16 +35,16 @@ public abstract class Personaggio {
     public int getDifesaBase() {
         return difesaBase;
     }
-
+    @Override
     public boolean isVivo() {
         return vita > 0;
     }
-
+    @Override
     public int attacca(Personaggio bersaglio) {
         int danno = calcolaAttacco();
         return bersaglio.riceviDanno(danno);
     }
-
+    @Override
     public int riceviDanno(int danno) {
         int dannoEffettivo = danno - calcolaDifesa();
 
