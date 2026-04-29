@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public abstract class Nemico extends Personaggio {
+public abstract class Nemico extends Personaggio implements Potenziabile {
 
-    protected Nemico(String nome, int puntiVita, int attacco, int difesa) {
-        super(nome, puntiVita, attacco, difesa);
+    protected Nemico(String nome, int vitaMassima, int attaccoBase, int difesaBase) {
+        super(nome, vitaMassima, attaccoBase, difesaBase);
     }
 }

@@ -4,9 +4,17 @@ public interface Combattente {
 
     String getNome();
 
+    int getVita();
+
+    int getVitaMassima();
+
     boolean isVivo();
 
-    int attacca(Personaggio bersaglio);
+    int attacca(Combattente bersaglio);
 
-    int riceviDanno(int danno);
+    void riceviDanno(int danno);
+
+    int calcolaAttacco();
+
+    int calcolaDifesa();
 }

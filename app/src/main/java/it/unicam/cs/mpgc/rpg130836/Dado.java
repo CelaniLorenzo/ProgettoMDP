@@ -3,22 +3,27 @@ package it.unicam.cs.mpgc.rpg130836;
 import java.util.Random;
 
 public class Dado {
-    private final int facce;
+
+    private static final int FACCE_STANDARD = 6;
+
+    private final int numeroFacce;
     private final Random random;
 
-    public Dado(int facce) {
-        if (facce <= 0) {
-            throw new IllegalArgumentException("Il dado deve avere almeno una faccia");
+    public Dado() {
+        this(FACCE_STANDARD);
+    }
+
+    public Dado(int numeroFacce) {
+        if (numeroFacce < 2) {
+            throw new IllegalArgumentException("Il dado deve avere almeno 2 facce.");
         }
-        this.facce = facce;
+
+        this.numeroFacce = numeroFacce;
         this.random = new Random();
     }
 
-    public int tira() {
-        return random.nextInt(facce) + 1;
+    public int lancia() {
+        return random.nextInt(numeroFacce) + 1;
     }
 }
-
-
-
 

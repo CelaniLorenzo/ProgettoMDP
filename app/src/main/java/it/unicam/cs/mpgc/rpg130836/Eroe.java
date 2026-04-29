@@ -1,36 +1,40 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public abstract class Eroe extends Personaggio {
+public abstract class Eroe extends Personaggio implements Potenziabile {
 
     private final Armatura armatura;
 
-    protected Eroe(String nome, int puntiVita, int attacco, int difesa, Armatura armatura) {
-        super(nome, puntiVita, attacco, difesa);
+    protected Eroe(String nome, int vitaMassima, int attaccoBase, int difesaBase, Armatura armatura) {
+        super(nome, vitaMassima, attaccoBase, difesaBase);
 
         if (armatura == null) {
-            throw new IllegalArgumentException("L'armatura non può essere nulla");
+            throw new IllegalArgumentException("L'armatura non può essere null.");
         }
 
         this.armatura = armatura;
     }
 
+    @Override
+    public int calcolaAttacco() {
+        return super.calcolaAttacco() + armatura.calcolaBonusAttacco();
+    }
+
+    @Override
+    public int calcolaDifesa() {
+        return super.calcolaDifesa() + armatura.calcolaBonusDifesa();
+    }
+
+    @Override
+    public void potenzia() {
+        armatura.potenzia();
+    }
+
+    @Override
+    public String descrizionePotenziamento() {
+        return armatura.descrizionePotenziamento();
+    }
+
     public Armatura getArmatura() {
         return armatura;
-    }
-
-    @Override
-    public int getAttacco() {
-        return super.getAttacco() + armatura.getBonusAttacco();
-    }
-
-    @Override
-    public int getDifesa() {
-        return super.getDifesa() + armatura.getBonusDifesa();
-    }
-
-    @Override
-    public void attacca(Personaggio bersaglio) {
-        System.out.println(getNome() + " usa l'abilità: " + armatura.getAbilitaSpeciale().getNome());
-        bersaglio.difenditi(getAttacco());
     }
 }
