@@ -62,4 +62,3 @@ public class Armatura implements Potenziabile {
         return bonusDifesa;
     }
 }
-// test push
