@@ -1,31 +1,53 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public abstract class Armatura implements Potenziabile {
+public class Armatura implements Potenziabile {
 
     private final String nome;
-    private int livello;
     private final AbilitaSpeciale abilitaSpeciale;
+    private int bonusAttacco;
+    private int bonusDifesa;
 
-    protected Armatura(String nome, AbilitaSpeciale abilitaSpeciale) {
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Il nome dell'armatura non può essere vuoto");
+    public Armatura(String nome, AbilitaSpeciale abilitaSpeciale, int bonusAttacco, int bonusDifesa) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il nome dell'armatura non può essere vuoto.");
         }
 
         if (abilitaSpeciale == null) {
-            throw new IllegalArgumentException("L'abilità speciale non può essere nulla");
+            throw new IllegalArgumentException("L'abilità speciale non può essere null.");
+        }
+
+        if (bonusAttacco < 0 || bonusDifesa < 0) {
+            throw new IllegalArgumentException("I bonus dell'armatura non possono essere negativi.");
         }
 
         this.nome = nome;
-        this.livello = 1;
         this.abilitaSpeciale = abilitaSpeciale;
+        this.bonusAttacco = bonusAttacco;
+        this.bonusDifesa = bonusDifesa;
+    }
+    public int getBonusAttaccoTotale() {
+        return bonusAttacco + abilitaSpeciale.getBonusAttacco();
+    }
+
+    public int getBonusDifesaTotale() {
+        return bonusDifesa + abilitaSpeciale.getBonusDifesa();
+    }
+
+    @Override
+    public void potenzia() {
+        bonusAttacco += 2;
+        bonusDifesa += 2;
+        abilitaSpeciale.potenzia();
+    }
+
+    @Override
+    public String descrizionePotenziamento() {
+        return nome + " (+" + bonusAttacco + " att, +" + bonusDifesa + " dif) con "
+                + abilitaSpeciale.descrizionePotenziamento();
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public int getLivello() {
-        return livello;
     }
 
     public AbilitaSpeciale getAbilitaSpeciale() {
@@ -33,16 +55,11 @@ public abstract class Armatura implements Potenziabile {
     }
 
     public int getBonusAttacco() {
-        return abilitaSpeciale.getBonusAttacco();
+        return bonusAttacco;
     }
 
     public int getBonusDifesa() {
-        return abilitaSpeciale.getBonusDifesa();
-    }
-
-    @Override
-    public void potenzia() {
-        livello++;
-        abilitaSpeciale.potenzia();
+        return bonusDifesa;
     }
 }
+// test push
