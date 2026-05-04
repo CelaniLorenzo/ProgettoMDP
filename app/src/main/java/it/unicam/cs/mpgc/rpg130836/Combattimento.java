@@ -1,36 +1,52 @@
 package it.unicam.cs.mpgc.rpg130836;
 
+import java.util.Objects;
+
 public class Combattimento {
 
     private final Dado dado;
+    private final Output output;
 
-    public Combattimento(Dado dado) {
-        this.dado = dado;
+    public Combattimento(Dado dado, Output output) {
+        this.dado = Objects.requireNonNull(dado, "Il dado non può essere null.");
+        this.output = Objects.requireNonNull(output, "L'output non può essere null.");
     }
 
-    public Personaggio combatti(Personaggio primo, Personaggio secondo) {
-        System.out.println();
-        System.out.println("Inizia il combattimento tra " + primo.getNome() + " e " + secondo.getNome());
-        System.out.println("--------------------------------");
+    public Combattente combatti(Combattente primo, Combattente secondo) {
+        validaCombattenti(primo, secondo);
+
+        stampaInizio(primo, secondo);
 
         while (primo.isVivo() && secondo.isVivo()) {
             eseguiTurno(primo, secondo);
-
-            System.out.println(primo.stato());
-            System.out.println(secondo.stato());
-            System.out.println("--------------------------------");
+            stampaStato(primo);
+            stampaStato(secondo);
+            output.stampa("------");
         }
 
-        if (primo.isVivo()) {
-            System.out.println(primo.getNome() + " ha vinto il combattimento!");
-            return primo;
-        } else {
-            System.out.println(secondo.getNome() + " ha vinto il combattimento!");
-            return secondo;
+        Combattente vincitore = determinaVincitore(primo, secondo);
+        output.stampa(vincitore.getNome() + " ha vinto il combattimento!");
+
+        return vincitore;
+    }
+
+    private void validaCombattenti(Combattente primo, Combattente secondo) {
+        if (primo == null || secondo == null) {
+            throw new IllegalArgumentException("I combattenti non possono essere null.");
+        }
+
+        if (!primo.isVivo() || !secondo.isVivo()) {
+            throw new IllegalArgumentException("Entrambi i combattenti devono essere vivi.");
         }
     }
 
-    private void eseguiTurno(Personaggio primo, Personaggio secondo) {
+    private void stampaInizio(Combattente primo, Combattente secondo) {
+        output.stampa("");
+        output.stampa("Inizia il combattimento tra " + primo.getNome() + " e " + secondo.getNome());
+        output.stampa("-------");
+    }
+
+    private void eseguiTurno(Combattente primo, Combattente secondo) {
         int tiroPrimo;
         int tiroSecondo;
 
@@ -38,17 +54,17 @@ public class Combattimento {
             tiroPrimo = dado.tira();
             tiroSecondo = dado.tira();
 
-            System.out.println(primo.getNome() + " tira il dado: " + tiroPrimo);
-            System.out.println(secondo.getNome() + " tira il dado: " + tiroSecondo);
+            output.stampa(primo.getNome() + " tira: " + tiroPrimo);
+            output.stampa(secondo.getNome() + " tira: " + tiroSecondo);
 
             if (tiroPrimo == tiroSecondo) {
-                System.out.println("Pareggio! Si ritira il dado.");
+                output.stampa("Pareggio! Si ritira il dado.");
             }
 
         } while (tiroPrimo == tiroSecondo);
 
-        Personaggio attaccante;
-        Personaggio difensore;
+        Combattente attaccante;
+        Combattente difensore;
         int tiroVincente;
 
         if (tiroPrimo > tiroSecondo) {
@@ -61,35 +77,39 @@ public class Combattimento {
             tiroVincente = tiroSecondo;
         }
 
+        eseguiAttacchi(attaccante, difensore, tiroVincente);
+    }
+
+    private void eseguiAttacchi(Combattente attaccante, Combattente difensore, int tiroVincente) {
         int numeroAttacchi = calcolaNumeroAttacchi(tiroVincente);
 
-        System.out.println(attaccante.getNome() + " attacca " + numeroAttacchi + " volta/e.");
+        output.stampa(attaccante.getNome() + " attacca " + numeroAttacchi + " volta/e.");
 
         for (int i = 1; i <= numeroAttacchi; i++) {
-            if (!difensore.isVivo()) {
-                break;
-            }
+            if (!difensore.isVivo()) break;
 
             int danno = attaccante.attacca(difensore);
 
-            System.out.println(
-                    attaccante.getNome()
-                            + " colpisce "
-                            + difensore.getNome()
-                            + " causando "
-                            + danno
-                            + " danni."
-            );
+            output.stampa(attaccante.getNome() + " colpisce " +
+                    difensore.getNome() + " causando " + danno + " danni.");
         }
     }
 
     private int calcolaNumeroAttacchi(int tiroDado) {
-        if (tiroDado <= 2) {
-            return 1;
-        } else if (tiroDado <= 4) {
-            return 2;
-        } else {
-            return 3;
-        }
+        return (tiroDado <= 2) ? 1 : (tiroDado <= 4) ? 2 : 3;
+    }
+
+    private Combattente determinaVincitore(Combattente primo, Combattente secondo) {
+        if (primo.isVivo() && !secondo.isVivo()) return primo;
+        if (secondo.isVivo() && !primo.isVivo()) return secondo;
+
+        throw new IllegalStateException("Combattimento terminato senza vincitore valido");
+    }
+
+    private void stampaStato(Combattente c) {
+        output.stampa(c.getNome() +
+                " | Vita: " + c.getVita() + "/" + c.getVitaMassima() +
+                " | Attacco: " + c.calcolaAttacco() +
+                " | Difesa: " + c.calcolaDifesa());
     }
 }

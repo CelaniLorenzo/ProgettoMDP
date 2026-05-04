@@ -2,11 +2,11 @@ package it.unicam.cs.mpgc.rpg130836;
 
 public abstract class Personaggio implements Combattente {
 
-    protected String nome;
-    protected int vita;
-    protected int vitaMassima;
-    protected int attaccoBase;
-    protected int difesaBase;
+    private final String nome;
+    private int vita;
+    private int vitaMassima;
+    private int attaccoBase;
+    private int difesaBase;
 
     protected Personaggio(String nome, int vitaMassima, int attaccoBase, int difesaBase) {
         validaParametri(nome, vitaMassima, attaccoBase, difesaBase);
@@ -18,15 +18,13 @@ public abstract class Personaggio implements Combattente {
         this.difesaBase = difesaBase;
     }
 
-    private void validaParametri(String nome, int vitaMassima, int attaccoBase, int difesaBase) {
+    private static void validaParametri(String nome, int vitaMassima, int attaccoBase, int difesaBase) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Il nome del personaggio non può essere vuoto.");
         }
-
         if (vitaMassima <= 0) {
             throw new IllegalArgumentException("La vita massima deve essere positiva.");
         }
-
         if (attaccoBase < 0 || difesaBase < 0) {
             throw new IllegalArgumentException("Attacco e difesa non possono essere negativi.");
         }
@@ -38,14 +36,17 @@ public abstract class Personaggio implements Combattente {
             throw new IllegalArgumentException("L'avversario non può essere null.");
         }
 
-        if (!isVivo() || !avversario.isVivo()) {
-            return 0;
-        }
-
-        int danno = Math.max(1, calcolaAttacco() - avversario.calcolaDifesa());
+        int danno = calcolaDanno(avversario);
         avversario.riceviDanno(danno);
 
         return danno;
+    }
+
+    /**
+     * Metodo separato per il calcolo del danno (estendibile nelle sottoclassi)
+     */
+    protected int calcolaDanno(Combattente avversario) {
+        return Math.max(1, calcolaAttacco() - avversario.calcolaDifesa());
     }
 
     @Override
@@ -53,7 +54,6 @@ public abstract class Personaggio implements Combattente {
         if (danno < 0) {
             throw new IllegalArgumentException("Il danno non può essere negativo.");
         }
-
         vita = Math.max(0, vita - danno);
     }
 
@@ -69,34 +69,33 @@ public abstract class Personaggio implements Combattente {
 
     protected void aumentaAttaccoBase(int incremento) {
         if (incremento < 0) {
-            throw new IllegalArgumentException("L'incremento non può essere negativo.");
+            throw new IllegalArgumentException("Incremento negativo.");
         }
-
         attaccoBase += incremento;
     }
 
     protected void aumentaDifesaBase(int incremento) {
         if (incremento < 0) {
-            throw new IllegalArgumentException("L'incremento non può essere negativo.");
+            throw new IllegalArgumentException("Incremento negativo.");
         }
-
         difesaBase += incremento;
     }
 
-    protected void aumentaVitaMassima(int incremento) {
+    /**
+     * Aumenta la vita massima e cura il personaggio
+     */
+    protected void aumentaVitaMassimaERecupera(int incremento) {
         if (incremento < 0) {
-            throw new IllegalArgumentException("L'incremento non può essere negativo.");
+            throw new IllegalArgumentException("Incremento negativo.");
         }
-
         vitaMassima += incremento;
         vita += incremento;
     }
 
     protected void cura(int puntiVita) {
         if (puntiVita < 0) {
-            throw new IllegalArgumentException("La cura non può essere negativa.");
+            throw new IllegalArgumentException("Cura negativa.");
         }
-
         vita = Math.min(vitaMassima, vita + puntiVita);
     }
 
@@ -126,5 +125,12 @@ public abstract class Personaggio implements Combattente {
 
     public int getDifesaBase() {
         return difesaBase;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " [HP: " + vita + "/" + vitaMassima +
+                ", ATK: " + attaccoBase +
+                ", DEF: " + difesaBase + "]";
     }
 }
