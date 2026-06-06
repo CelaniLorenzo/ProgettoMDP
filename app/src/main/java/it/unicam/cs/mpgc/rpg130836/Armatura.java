@@ -25,11 +25,12 @@ public class Armatura implements Potenziabile {
         this.bonusAttacco = bonusAttacco;
         this.bonusDifesa = bonusDifesa;
     }
-    public int getBonusAttaccoTotale() {
+
+    public int calcolaBonusAttacco() {
         return bonusAttacco + abilitaSpeciale.getBonusAttacco();
     }
 
-    public int getBonusDifesaTotale() {
+    public int calcolaBonusDifesa() {
         return bonusDifesa + abilitaSpeciale.getBonusDifesa();
     }
 
@@ -50,15 +51,13 @@ public class Armatura implements Potenziabile {
         return nome;
     }
 
-    public AbilitaSpeciale getAbilitaSpeciale() {
+    protected AbilitaSpeciale getAbilitaSpeciale() {
         return abilitaSpeciale;
     }
 
-    public int getBonusAttacco() {
-        return bonusAttacco;
-    }
-
-    public int getBonusDifesa() {
-        return bonusDifesa;
+    @Override
+    public String toString() {
+        return nome + " [ATT +" + calcolaBonusAttacco() +
+                ", DEF +" + calcolaBonusDifesa() + "]";
     }
 }

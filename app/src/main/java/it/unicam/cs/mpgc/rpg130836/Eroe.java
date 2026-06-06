@@ -1,17 +1,14 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public abstract class Eroe extends Personaggio implements Potenziabile {
+import java.util.Objects;
+
+public class Eroe extends Personaggio implements Potenziabile {
 
     private final Armatura armatura;
 
-    protected Eroe(String nome, int vitaMassima, int attaccoBase, int difesaBase, Armatura armatura) {
+    public Eroe(String nome, int vitaMassima, int attaccoBase, int difesaBase, Armatura armatura) {
         super(nome, vitaMassima, attaccoBase, difesaBase);
-
-        if (armatura == null) {
-            throw new IllegalArgumentException("L'armatura non può essere null.");
-        }
-
-        this.armatura = armatura;
+        this.armatura = Objects.requireNonNull(armatura, "L'armatura non può essere null.");
     }
 
     @Override
@@ -32,6 +29,11 @@ public abstract class Eroe extends Personaggio implements Potenziabile {
     @Override
     public String descrizionePotenziamento() {
         return armatura.descrizionePotenziamento();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Armatura: " + armatura.getNome();
     }
 
     public Armatura getArmatura() {

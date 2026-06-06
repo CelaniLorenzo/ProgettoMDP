@@ -1,6 +1,10 @@
 package it.unicam.cs.mpgc.rpg130836;
 
-public interface Persistenza {
-    void salva(StatoGioco statoGioco);
-    StatoGioco carica();
+import java.io.IOException;
+
+public interface Persistenza<T> {
+
+    void salva(T oggetto, String percorso) throws IOException;
+
+    T carica(String percorso) throws IOException;
 }

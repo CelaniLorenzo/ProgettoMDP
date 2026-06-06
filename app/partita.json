@@ -1,0 +1,16 @@
+{
+  "numeroIncontro": 1,
+  "eroeSelezionato": true,
+  "attaccoSquadraUsato": true,
+  "giocatore": {
+    "nome": "Iron Hulk",
+    "vitaAttuale": 120,
+    "vitaMassima": 120,
+    "danno": 41
+  },
+  "nemico": {
+    "nome": "Ultron",
+    "vitaAttuale": 54,
+    "vitaMassima": 110
+  }
+}

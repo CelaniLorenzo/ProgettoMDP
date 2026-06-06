@@ -3,35 +3,33 @@ package it.unicam.cs.mpgc.rpg130836;
 public class ForzaHulk implements AbilitaSpeciale {
 
     private int livello;
-    private int forza;
 
     public ForzaHulk() {
         this.livello = 1;
-        this.forza = 20;
     }
+
     @Override
     public String getNome() {
         return "Forza Hulk";
     }
-    @Override
-    public int getLivello() {
-        return livello;
-    }
+
     @Override
     public int getBonusAttacco() {
-        return forza;
+        return 7 + livello * 3;
     }
+
     @Override
     public int getBonusDifesa() {
-        return 0;
+        return 3 + livello;
     }
-    @Override
-    public String getDescrizione() {
-        return "Iron Hulk aumenta la forza distruttiva quando rompe.";
-    }
+
     @Override
     public void potenzia() {
         livello++;
-        forza += 12;
+    }
+
+    @Override
+    public String descrizionePotenziamento() {
+        return getNome() + " livello " + livello;
     }
 }

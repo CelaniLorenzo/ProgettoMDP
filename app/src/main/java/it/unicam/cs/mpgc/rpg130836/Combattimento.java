@@ -18,7 +18,7 @@ public class Combattimento {
         stampaInizio(primo, secondo);
 
         while (primo.isVivo() && secondo.isVivo()) {
-            eseguiTurno(primo, secondo);
+            eseguiTurnoSingolo(primo, secondo);
             stampaStato(primo);
             stampaStato(secondo);
             output.stampa("------");
@@ -46,7 +46,7 @@ public class Combattimento {
         output.stampa("-------");
     }
 
-    private void eseguiTurno(Combattente primo, Combattente secondo) {
+    public void eseguiTurnoSingolo(Combattente primo, Combattente secondo) {
         int tiroPrimo;
         int tiroSecondo;
 

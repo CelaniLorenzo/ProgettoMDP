@@ -22,7 +22,7 @@ public class Dado {
         this.random = new Random();
     }
 
-    public int lancia() {
+    public int tira() {
         return random.nextInt(numeroFacce) + 1;
     }
 }

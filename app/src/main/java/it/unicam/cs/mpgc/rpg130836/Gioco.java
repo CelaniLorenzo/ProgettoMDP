@@ -13,25 +13,26 @@ public class Gioco {
     private final Combattimento combattimento;
     private final GestorePotenziamenti gestorePotenziamenti;
     private final Persistenza<StatoGioco> salvataggio;
+    private final Output output;
 
     private int incontriDisputati;
     private String ultimoVincitore;
 
     public Gioco() {
         CreatorePersonaggi creatorePersonaggi = new CreatorePersonaggi();
+        this.output = new ConsoleOutput();
 
         this.eroi = creatorePersonaggi.creaEroi();
         this.nemici = creatorePersonaggi.creaNemici();
-        this.combattimento = new Combattimento(new Dado());
-        this.gestorePotenziamenti = new GestorePotenziamenti();
+        this.combattimento = new Combattimento(new Dado(), output);
+        this.gestorePotenziamenti = new GestorePotenziamenti(output);
         this.salvataggio = new SalvataggioJson();
         this.incontriDisputati = 0;
         this.ultimoVincitore = "Nessuno";
     }
     private void stampa(String messaggio) {
-        System.out.println(messaggio);
+        output.stampa(messaggio);
     }
-
     public void avviaPartita() {
         stampa("Inizio partita RPG Iron Hulk.");
 

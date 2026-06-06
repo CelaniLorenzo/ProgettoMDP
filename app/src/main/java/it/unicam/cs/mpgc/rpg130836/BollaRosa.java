@@ -3,35 +3,33 @@ package it.unicam.cs.mpgc.rpg130836;
 public class BollaRosa implements AbilitaSpeciale {
 
     private int livello;
-    private int protezione;
 
     public BollaRosa() {
         this.livello = 1;
-        this.protezione = 15;
     }
+
     @Override
     public String getNome() {
         return "Bolla Rosa";
     }
-    @Override
-    public int getLivello() {
-        return livello;
-    }
+
     @Override
     public int getBonusAttacco() {
-        return 0;
+        return 2 + livello;
     }
+
     @Override
     public int getBonusDifesa() {
-        return protezione;
+        return 6 + livello * 2;
     }
-    @Override
-    public String getDescrizione() {
-        return "La bolla rosa di Iron Heart diventa più grande e aumenta la difesa.";
-    }
+
     @Override
     public void potenzia() {
         livello++;
-        protezione += 10;
+    }
+
+    @Override
+    public String descrizionePotenziamento() {
+        return getNome() + " livello " + livello;
     }
 }
