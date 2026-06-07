@@ -10,6 +10,18 @@ public class StatoGioco {
     private int incontriDisputati;
     private String ultimoVincitore;
     private String esitoPartita;
+    private int numeroIncontro;
+    private boolean eroeSelezionato;
+    private boolean attaccoSquadraUsato;
+
+    private String nomeGiocatoreAttuale;
+    private int vitaGiocatoreAttuale;
+    private int vitaGiocatoreMassima;
+    private int dannoGiocatore;
+
+    private String nomeNemicoAttuale;
+    private int vitaNemicoAttuale;
+    private int vitaNemicoMassima;
 
     public StatoGioco() {
         this.eroi = new ArrayList<>();
@@ -49,6 +61,35 @@ public class StatoGioco {
                 ultimoVincitore,
                 esitoPartita
         );
+    }
+    public static StatoGioco creaDaGui(
+            int numeroIncontro,
+            boolean eroeSelezionato,
+            boolean attaccoSquadraUsato,
+            String nomeGiocatoreAttuale,
+            int vitaGiocatoreAttuale,
+            int vitaGiocatoreMassima,
+            int dannoGiocatore,
+            String nomeNemicoAttuale,
+            int vitaNemicoAttuale,
+            int vitaNemicoMassima
+    ) {
+        StatoGioco stato = new StatoGioco();
+
+        stato.numeroIncontro = numeroIncontro;
+        stato.eroeSelezionato = eroeSelezionato;
+        stato.attaccoSquadraUsato = attaccoSquadraUsato;
+
+        stato.nomeGiocatoreAttuale = nomeGiocatoreAttuale;
+        stato.vitaGiocatoreAttuale = vitaGiocatoreAttuale;
+        stato.vitaGiocatoreMassima = vitaGiocatoreMassima;
+        stato.dannoGiocatore = dannoGiocatore;
+
+        stato.nomeNemicoAttuale = nomeNemicoAttuale;
+        stato.vitaNemicoAttuale = vitaNemicoAttuale;
+        stato.vitaNemicoMassima = vitaNemicoMassima;
+
+        return stato;
     }
 
     private static List<DatiPersonaggio> creaDatiEroi(List<Eroe> eroi) {
@@ -90,4 +131,44 @@ public class StatoGioco {
     public String getEsitoPartita() {
         return esitoPartita;
     }
+    public int getNumeroIncontro() {
+        return numeroIncontro;
+    }
+
+    public boolean isEroeSelezionato() {
+        return eroeSelezionato;
+    }
+
+    public boolean isAttaccoSquadraUsato() {
+        return attaccoSquadraUsato;
+    }
+
+    public String getNomeGiocatoreAttuale() {
+        return nomeGiocatoreAttuale;
+    }
+
+    public int getVitaGiocatoreAttuale() {
+        return vitaGiocatoreAttuale;
+    }
+
+    public int getVitaGiocatoreMassima() {
+        return vitaGiocatoreMassima;
+    }
+
+    public int getDannoGiocatore() {
+        return dannoGiocatore;
+    }
+
+    public String getNomeNemicoAttuale() {
+        return nomeNemicoAttuale;
+    }
+
+    public int getVitaNemicoAttuale() {
+        return vitaNemicoAttuale;
+    }
+
+    public int getVitaNemicoMassima() {
+        return vitaNemicoMassima;
+    }
+
 }

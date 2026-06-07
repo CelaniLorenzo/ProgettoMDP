@@ -9,19 +9,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+
+import java.util.Objects;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.List;
 
 public class App extends Application {
     private TextArea logArea;
     private Button attaccoSquadraButton;
+    private Button potenziaButton;
+    private boolean potenziamentoDisponibile = false;
+    private Eroe eroeDaPotenziare;
     private int numeroIncontro = 0;
     private Label nomeGiocatoreLabel;
     private Label vitaGiocatoreLabel;
@@ -39,6 +41,8 @@ public class App extends Application {
     private int dannoGiocatore = 0;
     private boolean eroeSelezionato = false;
     private final CreatorePersonaggi creatorePersonaggi = new CreatorePersonaggi();
+    private final SalvataggioJson salvataggioJson = new SalvataggioJson();
+    private static final String FILE_SALVATAGGIO = "partita.json";
 
     private List<Eroe> eroiDisponibili;
     private Eroe eroeAttuale;
@@ -46,14 +50,52 @@ public class App extends Application {
     private Nemico nemicoAttuale;
     private boolean attaccoSquadraUsato = false;
 
+
     @Override
     public void start(Stage stage) {
-
-        Label titolo = new Label("IRON HULK RPG");
 
         Button nuovaPartita = new Button("Nuova Partita");
         Button caricaPartita = new Button("Carica Partita");
         Button esci = new Button("Esci");
+
+        String stileBottoneMenu = """
+        -fx-font-size: 22px;
+        -fx-font-weight: bold;
+        -fx-text-fill: black;
+        -fx-background-color: transparent;
+        -fx-border-color: transparent;
+        -fx-padding: 8 20 8 20;
+        -fx-focus-color: transparent;
+        -fx-faint-focus-color: transparent;
+        """;
+
+        String stileBottoneMenuHover = """
+        -fx-font-size: 22px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #005bbb;
+        -fx-background-color: transparent;
+        -fx-border-color: transparent;
+        -fx-padding: 8 20 8 20;
+        -fx-focus-color: transparent;
+        -fx-faint-focus-color: transparent;
+        """;
+
+        nuovaPartita.setStyle(stileBottoneMenu);
+        caricaPartita.setStyle(stileBottoneMenu);
+        esci.setStyle(stileBottoneMenu);
+
+        nuovaPartita.setPrefWidth(220);
+        caricaPartita.setPrefWidth(220);
+        esci.setPrefWidth(220);
+
+        nuovaPartita.setOnMouseEntered(e -> nuovaPartita.setStyle(stileBottoneMenuHover));
+        nuovaPartita.setOnMouseExited(e -> nuovaPartita.setStyle(stileBottoneMenu));
+
+        caricaPartita.setOnMouseEntered(e -> caricaPartita.setStyle(stileBottoneMenuHover));
+        caricaPartita.setOnMouseExited(e -> caricaPartita.setStyle(stileBottoneMenu));
+
+        esci.setOnMouseEntered(e -> esci.setStyle(stileBottoneMenuHover));
+        esci.setOnMouseExited(e -> esci.setStyle(stileBottoneMenu));
 
         nuovaPartita.setOnAction(e -> {
             resettaPartita();
@@ -67,18 +109,32 @@ public class App extends Application {
 
         esci.setOnAction(e -> stage.close());
 
-        VBox root = new VBox(15);
-        root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(
-                titolo,
+        VBox menuBox = new VBox(15);
+        menuBox.setAlignment(Pos.CENTER);
+        menuBox.setTranslateY(-90);
+        menuBox.setTranslateX(-30);
+
+        menuBox.getChildren().addAll(
                 nuovaPartita,
                 caricaPartita,
                 esci
         );
 
-        Scene scene = new Scene(root, 600, 400);
+        Image sfondo = new Image(
+                Objects.requireNonNull(getClass().getResource("/images/sfondo_menu.png")).toExternalForm()
+        );
 
-        stage.setTitle("Iron Hulk RPG");
+        ImageView sfondoView = new ImageView(sfondo);
+        sfondoView.setPreserveRatio(true);
+        sfondoView.setSmooth(true);
+
+        StackPane root = new StackPane();
+        root.getChildren().addAll(sfondoView, menuBox);
+
+        Scene scene = new Scene(root, 620, 800);
+        sfondoView.fitHeightProperty().bind(scene.heightProperty());
+
+        stage.setTitle("Iron Man e i suoi fantastici amici");
         stage.setScene(scene);
         stage.show();
     }
@@ -142,6 +198,9 @@ public class App extends Application {
             nemicoAttuale = nemiciDisponibili.get(numeroIncontro - 1);
             attaccoSquadraUsato = false;
             attaccoSquadraButton.setDisable(false);
+            potenziamentoDisponibile = false;
+            eroeDaPotenziare = null;
+            potenziaButton.setDisable(true);
 
             nomeNemicoAttuale = nemicoAttuale.getNome();
             vitaNemicoAttuale = nemicoAttuale.getVita();
@@ -182,8 +241,7 @@ public class App extends Application {
                 vitaNemicoLabel.setText("Vita: " + vitaNemicoAttuale + " / " + vitaNemicoMassima);
 
                 if (!nemicoAttuale.isVivo()) {
-                    logArea.appendText(nemicoAttuale.getNome() + " è stato sconfitto!\n");
-                    nomeNemicoLabel.setText("Nemico: sconfitto");
+                    gestisciNemicoSconfitto();
                 }
 
                 if (!eroeAttuale.isVivo()) {
@@ -192,6 +250,9 @@ public class App extends Application {
             });
         attaccoSquadraButton = new Button("Attacco di squadra");
         attaccoSquadraButton.setOnAction(e -> eseguiAttaccoSquadra());
+        potenziaButton = new Button("Potenzia vincitore");
+        potenziaButton.setDisable(true);
+        potenziaButton.setOnAction(e -> potenziaVincitore());
         Button salva = new Button("Salva partita");
         salva.setOnAction(e -> salvaPartita());
         Button tornaMenu = new Button("Torna al menu");
@@ -217,6 +278,7 @@ public class App extends Application {
                 prossimoIncontro,
                 attacca,
                 attaccoSquadraButton,
+                potenziaButton,
                 salva,
                 tornaMenu
         );
@@ -226,24 +288,7 @@ public class App extends Application {
         stage.setScene(scene);
     }
     private void salvaPartita() {
-        String json = """
-            {
-              "numeroIncontro": %d,
-              "eroeSelezionato": %b,
-              "attaccoSquadraUsato": %b,
-              "giocatore": {
-                "nome": "%s",
-                "vitaAttuale": %d,
-                "vitaMassima": %d,
-                "danno": %d
-              },
-              "nemico": {
-                "nome": "%s",
-                "vitaAttuale": %d,
-                "vitaMassima": %d
-              }
-            }
-            """.formatted(
+        StatoGioco statoGioco = StatoGioco.creaDaGui(
                 numeroIncontro,
                 eroeSelezionato,
                 attaccoSquadraUsato,
@@ -257,13 +302,8 @@ public class App extends Application {
         );
 
         try {
-            Files.writeString(
-                    Path.of("partita.json"),
-                    json,
-                    StandardCharsets.UTF_8
-            );
-
-            logArea.appendText("Partita salvata in partita.json.\n");
+            salvataggioJson.salva(statoGioco, FILE_SALVATAGGIO);
+            logArea.appendText("Partita salvata in " + FILE_SALVATAGGIO + ".\n");
 
         } catch (IOException ex) {
             logArea.appendText("Errore durante il salvataggio della partita.\n");
@@ -271,46 +311,40 @@ public class App extends Application {
         }
     }
     private void caricaPartitaDaFile() {
-        Path file = Path.of("partita.json");
-
-        if (!Files.exists(file)) {
-            logArea.appendText("Nessuna partita salvata trovata.\n");
-            return;
-        }
-
         try {
-            String json = Files.readString(file, StandardCharsets.UTF_8);
+            StatoGioco statoGioco = salvataggioJson.carica(FILE_SALVATAGGIO);
 
-            numeroIncontro = estraiInt(json, "numeroIncontro");
-            eroeSelezionato = estraiBoolean(json, "eroeSelezionato");
-            attaccoSquadraUsato = estraiBoolean(json, "attaccoSquadraUsato");
+            numeroIncontro = statoGioco.getNumeroIncontro();
+            eroeSelezionato = statoGioco.isEroeSelezionato();
+            attaccoSquadraUsato = statoGioco.isAttaccoSquadraUsato();
 
-            String giocatoreJson = estraiSezione(json, "giocatore");
-            String nemicoJson = estraiSezione(json, "nemico");
+            nomeGiocatoreAttuale = statoGioco.getNomeGiocatoreAttuale();
+            vitaGiocatoreAttuale = statoGioco.getVitaGiocatoreAttuale();
+            vitaGiocatoreMassima = statoGioco.getVitaGiocatoreMassima();
+            dannoGiocatore = statoGioco.getDannoGiocatore();
 
-            nomeGiocatoreAttuale = estraiString(giocatoreJson, "nome");
-            vitaGiocatoreAttuale = estraiInt(giocatoreJson, "vitaAttuale");
-            vitaGiocatoreMassima = estraiInt(giocatoreJson, "vitaMassima");
-            dannoGiocatore = estraiInt(giocatoreJson, "danno");
+            nomeNemicoAttuale = statoGioco.getNomeNemicoAttuale();
+            vitaNemicoAttuale = statoGioco.getVitaNemicoAttuale();
+            vitaNemicoMassima = statoGioco.getVitaNemicoMassima();
 
-            nomeNemicoAttuale = estraiString(nemicoJson, "nome");
-            vitaNemicoAttuale = estraiInt(nemicoJson, "vitaAttuale");
-            vitaNemicoMassima = estraiInt(nemicoJson, "vitaMassima");
             eroeAttuale = trovaEroePerNome(nomeGiocatoreAttuale);
             nemicoAttuale = trovaNemicoPerNome(nomeNemicoAttuale);
+
             eroeSelezionato = eroeAttuale != null;
+
             applicaVitaCaricata(eroeAttuale, vitaGiocatoreAttuale);
             applicaVitaCaricata(nemicoAttuale, vitaNemicoAttuale);
 
             aggiornaSchermataDopoCaricamento();
+
             if (attaccoSquadraButton != null) {
                 attaccoSquadraButton.setDisable(attaccoSquadraUsato);
             }
 
-            logArea.appendText("Partita caricata da partita.json.\n");
+            logArea.appendText("Partita caricata da " + FILE_SALVATAGGIO + ".\n");
 
         } catch (IOException ex) {
-            logArea.appendText("Errore durante il caricamento della partita.\n");
+            logArea.appendText("Nessuna partita salvata trovata o errore durante il caricamento.\n");
             ex.printStackTrace();
         }
     }
@@ -325,49 +359,6 @@ public class App extends Application {
             nomeNemicoLabel.setText("Nemico: nessuno");
             vitaNemicoLabel.setText("Vita: -");
         }
-    }
-    private String estraiSezione(String json, String nomeSezione) {
-        Pattern pattern = Pattern.compile("\"" + nomeSezione + "\"\\s*:\\s*\\{(.*?)\\}", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(json);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-
-        return "";
-    }
-
-    private String estraiString(String json, String chiave) {
-        Pattern pattern = Pattern.compile("\"" + chiave + "\"\\s*:\\s*\"([^\"]*)\"");
-        Matcher matcher = pattern.matcher(json);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-
-        return "";
-    }
-
-    private int estraiInt(String json, String chiave) {
-        Pattern pattern = Pattern.compile("\"" + chiave + "\"\\s*:\\s*(-?\\d+)");
-        Matcher matcher = pattern.matcher(json);
-
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
-        }
-
-        return 0;
-    }
-
-    private boolean estraiBoolean(String json, String chiave) {
-        Pattern pattern = Pattern.compile("\"" + chiave + "\"\\s*:\\s*(true|false)");
-        Matcher matcher = pattern.matcher(json);
-
-        if (matcher.find()) {
-            return Boolean.parseBoolean(matcher.group(1));
-        }
-
-        return false;
     }
     private void resettaPartita() {
         numeroIncontro = 0;
@@ -384,8 +375,11 @@ public class App extends Application {
 
         giocatoreAttaccaPerPrimo = true;
         attaccoSquadraUsato = false;
+        potenziamentoDisponibile = false;
+        eroeDaPotenziare = null;
         eroeAttuale = null;
         nemicoAttuale = null;
+
     }
     private void selezionaEroe(Eroe eroe) {
         eroeAttuale = eroe;
@@ -474,10 +468,64 @@ public class App extends Application {
         vitaNemicoLabel.setText("Vita: " + vitaNemicoAttuale + " / " + vitaNemicoMassima);
 
         if (!nemicoAttuale.isVivo()) {
-            logArea.appendText(nemicoAttuale.getNome() + " è stato sconfitto!\n");
-            nomeNemicoLabel.setText("Nemico: sconfitto");
+            gestisciNemicoSconfitto();
         }
     }
+
+    private void gestisciNemicoSconfitto() {
+        if (nemicoAttuale == null || nemicoAttuale.isVivo()) {
+            return;
+        }
+
+        logArea.appendText(nemicoAttuale.getNome() + " è stato sconfitto!\n");
+        nomeNemicoLabel.setText("Nemico: sconfitto");
+
+        if (!potenziamentoDisponibile) {
+            potenziamentoDisponibile = true;
+            eroeDaPotenziare = eroeAttuale;
+
+            if (potenziaButton != null) {
+                potenziaButton.setDisable(false);
+            }
+
+            logArea.appendText(
+                    eroeDaPotenziare.getNome()
+                            + " ha ottenuto un potenziamento! Premi 'Potenzia vincitore'.\n"
+            );
+        }
+    }
+
+    private void potenziaVincitore() {
+        if (!potenziamentoDisponibile) {
+            logArea.appendText("Non hai potenziamenti disponibili.\n");
+            return;
+        }
+
+        if (eroeDaPotenziare == null) {
+            logArea.appendText("Non c'è nessun vincitore da potenziare.\n");
+            return;
+        }
+
+        eroeDaPotenziare.potenzia();
+
+        logArea.appendText(eroeDaPotenziare.getNome() + " è stato potenziato!\n");
+        logArea.appendText(eroeDaPotenziare.descrizionePotenziamento() + "\n");
+
+        if (eroeDaPotenziare == eroeAttuale) {
+            dannoGiocatore = eroeAttuale.calcolaAttacco();
+            vitaGiocatoreAttuale = eroeAttuale.getVita();
+            vitaGiocatoreMassima = eroeAttuale.getVitaMassima();
+
+            vitaGiocatoreLabel.setText(
+                    "Vita: " + vitaGiocatoreAttuale + " / " + vitaGiocatoreMassima
+            );
+        }
+
+        potenziamentoDisponibile = false;
+        eroeDaPotenziare = null;
+        potenziaButton.setDisable(true);
+    }
+
 
     public static void main(String[] args) {
         launch(args);
