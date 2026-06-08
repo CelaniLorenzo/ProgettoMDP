@@ -14,6 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;
 import javafx.application.Platform;
+import javafx.scene.shape.Rectangle;
+import java.util.ArrayList;
+import javafx.scene.paint.Color;
+
 
 import java.util.Objects;
 
@@ -56,6 +60,9 @@ public class App extends Application {
     private double eroeX = 380;
     private double eroeY = 280;
     private static final double VELOCITA_EROE = 10;
+    private List<Rectangle> nemiciMappa = new ArrayList<>();
+    private List<Label> nomiNemiciMappa = new ArrayList<>();
+    private List<Nemico> nemiciAssociatiMappa = new ArrayList<>();
 
 
     @Override
@@ -268,6 +275,11 @@ public class App extends Application {
         apriMappa.setOnAction(e -> {
             if (!eroeSelezionato || eroeAttuale == null) {
                 logArea.appendText("Devi prima scegliere un eroe per entrare nella mappa.\n");
+                return;
+            }
+
+            if (vitaNemicoAttuale > 0 && nemicoAttuale != null && nemicoAttuale.isVivo()) {
+                logArea.appendText("Devi prima sconfiggere il nemico attuale.\n");
                 return;
             }
 
@@ -584,6 +596,7 @@ public class App extends Application {
 
         mappaPane.getChildren().addAll(sfondoMappa, istruzioni, eroeMappa, tornaGioco);
 
+        aggiungiNemiciAllaMappa(mappaPane, stage);
         Scene scene = new Scene(mappaPane, 800, 600);
 
         scene.setOnKeyPressed(e -> {
@@ -614,6 +627,7 @@ public class App extends Application {
 
             eroeMappa.setLayoutX(eroeX);
             eroeMappa.setLayoutY(eroeY);
+            controllaCollisioneNemici(stage);
         });
 
         stage.setScene(scene);
@@ -631,7 +645,102 @@ public class App extends Application {
             default -> "/images/iron_hulk.png";
         };
     }
+     private void aggiungiNemiciAllaMappa(Pane mappaPane, Stage stage) {
+        nemiciMappa.clear();
+        nomiNemiciMappa.clear();
+        nemiciAssociatiMappa.clear();
 
+        if (nemiciDisponibili == null) {
+            nemiciDisponibili = creatorePersonaggi.creaNemici();
+        }
+
+        double[][] posizioni = {
+                {150, 420},
+                {600, 360},
+                {700, 170}
+        };
+
+        for (int i = 0; i < nemiciDisponibili.size(); i++) {
+            Nemico nemico = nemiciDisponibili.get(i);
+
+            Rectangle nemicoView = new Rectangle(45, 45);
+            nemicoView.setFill(Color.PURPLE);
+            nemicoView.setArcWidth(10);
+            nemicoView.setArcHeight(10);
+
+            nemicoView.setLayoutX(posizioni[i][0]);
+            nemicoView.setLayoutY(posizioni[i][1]);
+            nemicoView.setOnMouseClicked(e -> avviaIncontroDaMappa(nemico, stage));
+
+            Label nomeNemico = new Label(nemico.getNome());
+            nomeNemico.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;");
+            nomeNemico.setLayoutX(posizioni[i][0] - 10);
+            nomeNemico.setLayoutY(posizioni[i][1] - 25);
+            nomeNemico.setOnMouseClicked(e -> avviaIncontroDaMappa(nemico, stage));
+
+            nemiciMappa.add(nemicoView);
+            nomiNemiciMappa.add(nomeNemico);
+            nemiciAssociatiMappa.add(nemico);
+
+            mappaPane.getChildren().addAll(nomeNemico, nemicoView);
+        }
+    }
+    private void avviaIncontroDaMappa(Nemico nemico, Stage stage) {
+        if (nemico == null || !nemico.isVivo()) {
+            return;
+        }
+
+        nemicoAttuale = nemico;
+
+        nomeNemicoAttuale = nemicoAttuale.getNome();
+        vitaNemicoAttuale = nemicoAttuale.getVita();
+        vitaNemicoMassima = nemicoAttuale.getVitaMassima();
+
+        if (eroeAttuale != null) {
+            nomeGiocatoreAttuale = eroeAttuale.getNome();
+            vitaGiocatoreAttuale = eroeAttuale.getVita();
+            vitaGiocatoreMassima = eroeAttuale.getVitaMassima();
+            dannoGiocatore = eroeAttuale.calcolaAttacco();
+            eroeSelezionato = true;
+        }
+
+        attaccoSquadraUsato = false;
+        potenziamentoDisponibile = false;
+        eroeDaPotenziare = null;
+
+        mostraSchermataGioco(stage);
+
+        nomeGiocatoreLabel.setText("Giocatore: " + nomeGiocatoreAttuale);
+        vitaGiocatoreLabel.setText("Vita: " + vitaGiocatoreAttuale + " / " + vitaGiocatoreMassima);
+
+        nomeNemicoLabel.setText("Nemico: " + nomeNemicoAttuale);
+        vitaNemicoLabel.setText("Vita: " + vitaNemicoAttuale + " / " + vitaNemicoMassima);
+
+        if (attaccoSquadraButton != null) {
+            attaccoSquadraButton.setDisable(false);
+        }
+
+        if (potenziaButton != null) {
+            potenziaButton.setDisable(true);
+        }
+
+        logArea.appendText("Hai incontrato " + nomeNemicoAttuale + " sulla mappa!\n");
+    }
+    private void controllaCollisioneNemici(Stage stage) {
+        if (eroeMappa == null) {
+            return;
+        }
+
+        for (int i = 0; i < nemiciMappa.size(); i++) {
+            Rectangle nemicoView = nemiciMappa.get(i);
+
+            if (eroeMappa.getBoundsInParent().intersects(nemicoView.getBoundsInParent())) {
+                Nemico nemicoToccato = nemiciAssociatiMappa.get(i);
+                avviaIncontroDaMappa(nemicoToccato, stage);
+                return;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
