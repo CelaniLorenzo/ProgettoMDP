@@ -12,11 +12,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+import javafx.application.Platform;
 
 import java.util.Objects;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Collections;
 
 public class App extends Application {
     private TextArea logArea;
@@ -49,6 +52,10 @@ public class App extends Application {
     private List<Nemico> nemiciDisponibili;
     private Nemico nemicoAttuale;
     private boolean attaccoSquadraUsato = false;
+    private ImageView eroeMappa;
+    private double eroeX = 380;
+    private double eroeY = 280;
+    private static final double VELOCITA_EROE = 10;
 
 
     @Override
@@ -162,6 +169,7 @@ public class App extends Application {
 
         eroiDisponibili = creatorePersonaggi.creaEroi();
         nemiciDisponibili = creatorePersonaggi.creaNemici();
+        Collections.shuffle(nemiciDisponibili);
 
         Button eroe1 = new Button(eroiDisponibili.get(0).getNome());
         Button eroe2 = new Button(eroiDisponibili.get(1).getNome());
@@ -255,6 +263,17 @@ public class App extends Application {
         potenziaButton.setOnAction(e -> potenziaVincitore());
         Button salva = new Button("Salva partita");
         salva.setOnAction(e -> salvaPartita());
+
+        Button apriMappa = new Button("Apri mappa");
+        apriMappa.setOnAction(e -> {
+            if (!eroeSelezionato || eroeAttuale == null) {
+                logArea.appendText("Devi prima scegliere un eroe per entrare nella mappa.\n");
+                return;
+            }
+
+            mostraMappaGioco(stage);
+        });
+
         Button tornaMenu = new Button("Torna al menu");
         tornaMenu.setOnAction(e -> start(stage));
 
@@ -279,6 +298,7 @@ public class App extends Application {
                 attacca,
                 attaccoSquadraButton,
                 potenziaButton,
+                apriMappa,
                 salva,
                 tornaMenu
         );
@@ -524,6 +544,92 @@ public class App extends Application {
         potenziamentoDisponibile = false;
         eroeDaPotenziare = null;
         potenziaButton.setDisable(true);
+    }
+    private void mostraMappaGioco(Stage stage) {
+        Pane mappaPane = new Pane();
+        mappaPane.setPrefSize(800, 600);
+        mappaPane.setFocusTraversable(true);
+
+        Image immagineMappa = new Image(
+                Objects.requireNonNull(getClass().getResource("/images/mappa.png")).toExternalForm()
+        );
+
+        ImageView sfondoMappa = new ImageView(immagineMappa);
+        sfondoMappa.setFitWidth(800);
+        sfondoMappa.setFitHeight(600);
+        sfondoMappa.setPreserveRatio(false);
+
+        Image immagineEroe = new Image(
+                Objects.requireNonNull(getClass().getResource(percorsoImmagineEroe())).toExternalForm()
+        );
+
+        eroeMappa = new ImageView(immagineEroe);
+        eroeMappa.setFitWidth(80);
+        eroeMappa.setFitHeight(80);
+        eroeMappa.setPreserveRatio(true);
+
+        eroeMappa.setLayoutX(eroeX);
+        eroeMappa.setLayoutY(eroeY);
+
+
+        Label istruzioni = new Label("Usa le frecce per muovere il personaggio");
+        istruzioni.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+        istruzioni.setLayoutX(20);
+        istruzioni.setLayoutY(20);
+
+        Button tornaGioco = new Button("Torna al gioco");
+        tornaGioco.setLayoutX(20);
+        tornaGioco.setLayoutY(550);
+        tornaGioco.setOnAction(e -> mostraSchermataGioco(stage));
+
+        mappaPane.getChildren().addAll(sfondoMappa, istruzioni, eroeMappa, tornaGioco);
+
+        Scene scene = new Scene(mappaPane, 800, 600);
+
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case UP -> eroeY -= VELOCITA_EROE;
+                case DOWN -> eroeY += VELOCITA_EROE;
+                case LEFT -> eroeX -= VELOCITA_EROE;
+                case RIGHT -> eroeX += VELOCITA_EROE;
+                default -> {
+                }
+            }
+
+            if (eroeX < 0) {
+                eroeX = 0;
+            }
+
+            if (eroeY < 0) {
+                eroeY = 0;
+            }
+
+            if (eroeX > 760) {
+                eroeX = 760;
+            }
+
+            if (eroeY > 560) {
+                eroeY = 560;
+            }
+
+            eroeMappa.setLayoutX(eroeX);
+            eroeMappa.setLayoutY(eroeY);
+        });
+
+        stage.setScene(scene);
+        Platform.runLater(() -> mappaPane.requestFocus());
+    }
+    private String percorsoImmagineEroe() {
+        if (eroeAttuale == null) {
+            return "/images/iron_hulk.png";
+        }
+
+        return switch (eroeAttuale.getNome()) {
+            case "Iron Hulk" -> "/images/iron_hulk.png";
+            case "Iron Heart" -> "/images/iron_heart.png";
+            case "Iron Man" -> "/images/iron_man.png";
+            default -> "/images/iron_hulk.png";
+        };
     }
 
 
