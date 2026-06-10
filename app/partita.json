@@ -1,16 +1,17 @@
 {
+  "eroi": [],
+  "nemici": [],
+  "incontriDisputati": 0,
+  "ultimoVincitore": "Nessuno",
+  "esitoPartita": "Partita non conclusa",
   "numeroIncontro": 1,
   "eroeSelezionato": true,
-  "attaccoSquadraUsato": true,
-  "giocatore": {
-    "nome": "Iron Hulk",
-    "vitaAttuale": 120,
-    "vitaMassima": 120,
-    "danno": 41
-  },
-  "nemico": {
-    "nome": "Ultron",
-    "vitaAttuale": 54,
-    "vitaMassima": 110
-  }
+  "attaccoSquadraUsato": false,
+  "nomeGiocatoreAttuale": "Iron Hulk",
+  "vitaGiocatoreAttuale": 117,
+  "vitaGiocatoreMassima": 120,
+  "dannoGiocatore": 41,
+  "nomeNemicoAttuale": "Ultron",
+  "vitaNemicoAttuale": 110,
+  "vitaNemicoMassima": 110
 }
