@@ -1,9 +1,29 @@
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build
-
-# Ignore Kotlin plugin data
-.kotlin
+### IntelliJ IDEA ###
 .idea/
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+.idea/gradle.xml
+.idea/misc.xml
+*.iws
+*.iml
+*.ipr
+*.class
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### GRADLE ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+.kotlin
+
+### Mac OS ###
+.DS_Store
+
+### SAVES ###
+.json
