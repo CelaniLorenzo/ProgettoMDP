@@ -11,6 +11,9 @@ public class DatiSelezioneEroeApplicazione {
     private final int vitaMassima;
     private final int danno;
 
+    /*
+     * Costruisce un'istanza di DatiSelezioneEroeApplicazione.
+     */
     public DatiSelezioneEroeApplicazione(
             Eroe eroe,
             javafx.scene.image.ImageView eroeView,
@@ -27,6 +30,9 @@ public class DatiSelezioneEroeApplicazione {
         this.danno = danno;
     }
 
+    /*
+     * Restituisce l'eroe.
+     */
     public Eroe getEroe() {
         return eroe;
     }
@@ -35,18 +41,30 @@ public class DatiSelezioneEroeApplicazione {
         return eroeView;
     }
 
+    /*
+     * Restituisce il nome.
+     */
     public String getNome() {
         return nome;
     }
 
+    /*
+     * Restituisce la vita.
+     */
     public int getVita() {
         return vita;
     }
 
+    /*
+     * Restituisce la vita massima.
+     */
     public int getVitaMassima() {
         return vitaMassima;
     }
 
+    /*
+     * Restituisce il danno.
+     */
     public int getDanno() {
         return danno;
     }

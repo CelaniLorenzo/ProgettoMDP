@@ -10,6 +10,9 @@ import java.util.List;
 
 public class CreatorePersonaggi {
 
+    /*
+     * Crea gli eroi.
+     */
     public List<Eroe> creaEroi() {
         List<Eroe> eroi = new ArrayList<>();
 
@@ -26,6 +29,9 @@ public class CreatorePersonaggi {
     }
 
 
+    /*
+     * Crea i nemici.
+     */
     public List<Nemico> creaNemici() {
         List<Nemico> nemici = new ArrayList<>();
 

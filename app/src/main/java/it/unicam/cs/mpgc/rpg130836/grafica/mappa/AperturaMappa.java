@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 public class AperturaMappa {
 
+    /*
+     * Crea i dati di apertura della mappa.
+     */
     public DatiAperturaMappa creaDatiAperturaMappa(
             Stage stage,
             CreatoreElementiBaseMappa creatoreElementiBaseMappa,
@@ -47,6 +50,10 @@ public class AperturaMappa {
                 pulsantiNavigazioneMappa.getMappaAvanti()
         );
     }
+
+    /*
+     * Aggiunge l'elementi base alla mappa.
+     */
     public void aggiungiElementiBaseAllaMappa(
             GestoreElementiMappa gestoreElementiMappa,
             DatiAperturaMappa datiAperturaMappa,
@@ -68,6 +75,10 @@ public class AperturaMappa {
                 potenziaMappaButton
         );
     }
+
+    /*
+     * Prepara il combattimento sulla mappa.
+     */
     public DatiPreparazioneCombattimentoMappa preparaCombattimentoMappa(
             GestoreInterfacciaMappa gestoreInterfacciaMappa,
             GestorePulsantiMappa gestorePulsantiMappa,
@@ -102,6 +113,10 @@ public class AperturaMappa {
                 potenziaMappaButton
         );
     }
+
+    /*
+     * Aggiunge i personaggi alla mappa.
+     */
     public void aggiungiPersonaggiAllaMappa(
             ControllerMappa controllerMappa,
             Pane mappaPane,
@@ -114,6 +129,10 @@ public class AperturaMappa {
                 azioneAggiungiNemici
         );
     }
+
+    /*
+     * Seleziona un eroe dalla mappa.
+     */
     public DatiSelezioneEroeApplicazione selezionaEroeDaMappa(
             ControllerMappa controllerMappa,
             Eroe eroe,

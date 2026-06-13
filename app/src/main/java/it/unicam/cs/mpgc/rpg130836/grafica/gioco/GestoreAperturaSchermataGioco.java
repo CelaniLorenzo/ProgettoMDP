@@ -7,6 +7,9 @@ public class GestoreAperturaSchermataGioco {
 
     private final AccessoSchermataGioco accessoSchermataGioco;
 
+    /*
+     * Costruisce un'istanza di GestoreAperturaSchermataGioco.
+     */
     public GestoreAperturaSchermataGioco(
             AccessoSchermataGioco accessoSchermataGioco
     ) {
@@ -14,6 +17,9 @@ public class GestoreAperturaSchermataGioco {
                 Objects.requireNonNull(accessoSchermataGioco);
     }
 
+    /*
+     * Mostra la schermata.
+     */
     public void mostra() {
         accessoSchermataGioco.mostraSchermataGioco();
     }

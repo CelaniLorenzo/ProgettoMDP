@@ -12,6 +12,9 @@ public class DatiSelezioneEroeMappa {
     private final int vitaMassima;
     private final int danno;
 
+    /*
+     * Costruisce un'istanza di DatiSelezioneEroeMappa.
+     */
     public DatiSelezioneEroeMappa(Eroe eroe, ImageView eroeView) {
         this.eroe = eroe;
         this.eroeView = eroeView;

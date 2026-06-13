@@ -20,12 +20,18 @@ public class ControllerMappa {
 
     private final GestorePulsantiMappa gestorePulsantiMappa;
 
+    /*
+     * Costruisce un'istanza di ControllerMappa.
+     */
     public ControllerMappa(
             GestorePulsantiMappa gestorePulsantiMappa
     ) {
         this.gestorePulsantiMappa = gestorePulsantiMappa;
     }
 
+    /*
+     * Crea i pulsanti navigazione mappa.
+     */
     public PulsantiNavigazioneMappa creaPulsantiNavigazioneMappa(
             Stage stage,
             Runnable azioneIndietro,
@@ -40,6 +46,10 @@ public class ControllerMappa {
                 )
         );
     }
+
+    /*
+     * Aggiunge i personaggi alla mappa.
+     */
     public void aggiungiPersonaggiAllaMappa(
             Pane mappaPane,
             Runnable aggiungiEroi,
@@ -48,6 +58,10 @@ public class ControllerMappa {
         aggiungiEroi.run();
         aggiungiNemici.run();
     }
+
+    /*
+     * Mostra la scena della mappa.
+     */
     public void mostraSceneMappa(
             Stage stage,
             Pane mappaPane,
@@ -56,12 +70,19 @@ public class ControllerMappa {
         stage.setScene(scene);
         Platform.runLater(() -> mappaPane.requestFocus());
     }
+
+    /*
+     * Crea il gestore degli incontri della mappa.
+     */
     public GestoreIncontriMappa creaGestoreIncontriMappa(
             GestoreInizializzazioneMappa gestoreInizializzazioneMappa
     ) {
         return gestoreInizializzazioneMappa.creaGestoreIncontriMappa();
     }
 
+    /*
+     * Crea il gestore del movimento dei nemici sulla mappa.
+     */
     public GestoreMovimentoNemiciMappa creaGestoreMovimentoNemiciMappa(
             GestoreInizializzazioneMappa gestoreInizializzazioneMappa,
             java.util.List<javafx.scene.image.ImageView> nemiciMappa,
@@ -72,6 +93,10 @@ public class ControllerMappa {
                 nemiciAssociatiMappa
         );
     }
+
+    /*
+     * Crea la scena della mappa.
+     */
     public Scene creaSceneMappa(
             Pane mappaPane,
             Supplier<ImageView> eroeMappaSupplier,
@@ -86,6 +111,9 @@ public class ControllerMappa {
 
             private long ultimoFrame;
 
+            /*
+             * Gestisce l'aggiornamento del timer o dell'evento ricevuto.
+             */
             @Override
             public void handle(long now) {
                 if (tastiPremuti.isEmpty()) {
@@ -115,6 +143,9 @@ public class ControllerMappa {
                 controlloCollisione.run();
             }
 
+            /*
+             * Calcola il tempo trascorso in secondi.
+             */
             private double calcolaDeltaSecondi(long now) {
                 if (ultimoFrame == 0) {
                     ultimoFrame = now;
@@ -152,6 +183,10 @@ public class ControllerMappa {
 
         return scene;
     }
+
+    /*
+     * Gestisce la collisione con un nemico.
+     */
     public void gestisciCollisioneConNemico(
             Nemico nemicoToccato,
             Runnable avvioIncontro
@@ -160,6 +195,10 @@ public class ControllerMappa {
             avvioIncontro.run();
         }
     }
+
+    /*
+     * Controlla la collisione con i nemici.
+     */
     public void controllaCollisioneNemici(
             GestoreCollisioniMappa gestoreCollisioniMappa,
             ImageView eroeMappa,
@@ -176,9 +215,17 @@ public class ControllerMappa {
 
         gestioneCollisione.accept(nemicoToccato);
     }
+
+    /*
+     * Ferma il movimento dei nemici.
+     */
     public void fermaMovimentoNemici(GestoreNemiciMappa gestoreNemiciMappa) {
         gestoreNemiciMappa.fermaMovimentoNemici();
     }
+
+    /*
+     * Avvia il movimento dei nemici.
+     */
     public void avviaMovimentoNemici(
             GestoreNemiciMappa gestoreNemiciMappa,
             GestoreMovimentoNemiciMappa gestoreMovimentoNemiciMappa,
@@ -189,6 +236,10 @@ public class ControllerMappa {
             controlloCollisione.run();
         });
     }
+
+    /*
+     * Aggiunge gli eroi alla mappa.
+     */
     public void aggiungiEroiAllaMappa(
             Pane mappaPane,
             GestoreEroiMappa gestoreEroiMappa,
@@ -205,6 +256,10 @@ public class ControllerMappa {
                 selezioneEroe
         );
     }
+
+    /*
+     * Aggiunge i nemici alla mappa.
+     */
     public void aggiungiNemiciAllaMappa(
             Pane mappaPane,
             GestoreNemiciVisualiMappa gestoreNemiciVisualiMappa,
@@ -223,6 +278,10 @@ public class ControllerMappa {
                 avvioIncontro
         );
     }
+
+    /*
+     * Seleziona un eroe dalla mappa.
+     */
     public DatiSelezioneEroeMappa selezionaEroeDaMappa(
             Eroe eroe,
             ImageView eroeView,

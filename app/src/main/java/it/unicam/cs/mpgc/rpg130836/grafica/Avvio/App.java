@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+    /*
+     * Metodo iniziale chiamato automaticamente da JavaFX.
+     * Imposta l'icona della finestra, il titolo del gioco
+     * e mostra il menu iniziale.
+     */
     @Override
     public void start(Stage stage) {
         Image icona = new Image(Objects.requireNonNull(
@@ -19,6 +24,10 @@ public class App extends Application {
         new RpgJavaFxFrame(stage).mostraMenu();
     }
 
+    /*
+     * Punto di ingresso del programma.
+     * Avvia l'applicazione JavaFX.
+     */
     public static void main(String[] args) {
         launch(args);
     }

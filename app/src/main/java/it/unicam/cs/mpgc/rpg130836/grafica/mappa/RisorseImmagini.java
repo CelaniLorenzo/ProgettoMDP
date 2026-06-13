@@ -6,6 +6,9 @@ import it.unicam.cs.mpgc.rpg130836.model.personaggi.Nemico;
 
 public class RisorseImmagini {
 
+    /*
+     * Restituisce il percorso dell'immagine dell'eroe.
+     */
     public String percorsoEroe(Eroe eroe) {
         if (eroe == null) {
             return "/images/iron_hulk.png";
@@ -19,6 +22,9 @@ public class RisorseImmagini {
         };
     }
 
+    /*
+     * Restituisce il percorso dell'immagine del nemico.
+     */
     public String percorsoNemico(Nemico nemico) {
         if (nemico == null) {
             return "/images/ultron.png";
@@ -32,6 +38,9 @@ public class RisorseImmagini {
         };
     }
 
+    /*
+     * Restituisce il percorso dell'immagine del potere.
+     */
     public String percorsoPotere(Eroe eroe) {
         if (eroe == null) {
             return "/images/laser.png";

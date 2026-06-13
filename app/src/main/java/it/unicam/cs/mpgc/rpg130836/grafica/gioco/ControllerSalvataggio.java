@@ -14,6 +14,10 @@ public class ControllerSalvataggio {
     private final GestoreSalvataggioPartita gestoreSalvataggioPartita;
     private final String fileSalvataggio;
 
+    /*
+     * Costruisce il controller del salvataggio,
+     * memorizzando il gestore e il nome del file da usare.
+     */
     public ControllerSalvataggio(
             GestoreSalvataggioPartita gestoreSalvataggioPartita,
             String fileSalvataggio
@@ -22,6 +26,10 @@ public class ControllerSalvataggio {
         this.fileSalvataggio = fileSalvataggio;
     }
 
+    /*
+     * Salva lo stato corrente della partita
+     * e scrive l'esito dell'operazione nel log.
+     */
     public void salva(
             StatoGioco statoGioco,
             TextArea logArea
@@ -43,6 +51,11 @@ public class ControllerSalvataggio {
             ex.printStackTrace();
         }
     }
+
+    /*
+     * Crea uno stato di gioco partendo dai dati della schermata
+     * e poi salva la partita su file.
+     */
     public void salvaPartita(
             int numeroIncontro,
             boolean eroeSelezionato,
@@ -71,6 +84,11 @@ public class ControllerSalvataggio {
 
         salva(statoGioco, logArea);
     }
+
+    /*
+     * Carica lo stato della partita dal file di salvataggio
+     * e restituisce i dati caricati.
+     */
     public StatoGioco carica(TextArea logArea) {
         try {
             StatoGioco statoGioco = gestoreSalvataggioPartita.carica();
@@ -90,6 +108,11 @@ public class ControllerSalvataggio {
             return null;
         }
     }
+
+    /*
+     * Applica alla partita corrente i dati caricati dal file,
+     * aggiornando eroe, nemico, vite e pulsante dell'attacco di squadra.
+     */
     public void applicaStatoCaricato(
             StatoGioco statoGioco,
             SchermataGioco schermataGioco,
@@ -136,6 +159,10 @@ public class ControllerSalvataggio {
         }
     }
 
+    /*
+     * Aggiorna le etichette della schermata dopo il caricamento
+     * di una partita salvata.
+     */
     private void aggiornaSchermataDopoCaricamento(
             SchermataGioco schermataGioco,
             String nomeGiocatoreAttuale,

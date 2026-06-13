@@ -7,10 +7,16 @@ public class AzioneNuovaPartita {
 
     private final AvvioPartita avvioPartita;
 
+    /*
+     * Costruisce un'istanza di AzioneNuovaPartita.
+     */
     public AzioneNuovaPartita(AvvioPartita avvioPartita) {
         this.avvioPartita = Objects.requireNonNull(avvioPartita);
     }
 
+    /*
+     * Esegue l'azione associata.
+     */
     public void esegui() {
         avvioPartita.apriNuovaPartita();
     }

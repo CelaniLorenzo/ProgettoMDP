@@ -13,6 +13,9 @@ public class GestoreEroiMappa {
     private final RisorseImmagini risorseImmagini;
     private final SchermataMappa schermataMappa;
 
+    /*
+     * Costruisce un'istanza di GestoreEroiMappa.
+     */
     public GestoreEroiMappa(
             RisorseImmagini risorseImmagini,
             SchermataMappa schermataMappa
@@ -21,6 +24,9 @@ public class GestoreEroiMappa {
         this.schermataMappa = schermataMappa;
     }
 
+    /*
+     * Aggiunge gli eroi alla mappa.
+     */
     public void aggiungiEroiAllaMappa(
             Pane mappaPane,
             List<Eroe> eroiDisponibili,

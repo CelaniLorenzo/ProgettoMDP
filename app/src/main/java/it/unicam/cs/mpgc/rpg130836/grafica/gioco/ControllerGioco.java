@@ -12,17 +12,31 @@ public class ControllerGioco {
 
     private final GestorePersonaggi gestorePersonaggi;
 
+    /*
+     * Costruisce il controller del gioco usando il gestore
+     * responsabile della creazione dei personaggi.
+     */
     public ControllerGioco(GestorePersonaggi gestorePersonaggi) {
         this.gestorePersonaggi = gestorePersonaggi;
     }
 
+    /*
+     * Crea e restituisce la lista degli eroi disponibili.
+     */
     public List<Eroe> creaEroi() {
         return gestorePersonaggi.creaEroi();
     }
 
+    /*
+     * Crea e restituisce la lista dei nemici mescolati.
+     */
     public List<Nemico> creaNemiciMescolati() {
         return gestorePersonaggi.creaNemiciMescolati();
     }
+
+    /*
+     * Controlla se il giocatore può usare l'attacco di squadra.
+     */
     public boolean puoUsareAttaccoSquadra(
             StatoPartitaCorrente stato,
             SchermataGioco schermataGioco
@@ -44,6 +58,10 @@ public class ControllerGioco {
 
         return true;
     }
+
+    /*
+     * Esegue l'attacco di squadra facendo attaccare tutti gli eroi vivi.
+     */
     public void eseguiAttacchiSquadra(
             List<Eroe> eroiDisponibili,
             StatoPartitaCorrente stato,
@@ -63,6 +81,10 @@ public class ControllerGioco {
             }
         }
     }
+
+    /*
+     * Aggiorna le etichette della vita dopo l'attacco di squadra.
+     */
     public void aggiornaViteDopoAttaccoSquadra(
             StatoPartitaCorrente stato,
             SchermataGioco schermataGioco
@@ -79,6 +101,10 @@ public class ControllerGioco {
         schermataGioco.getVitaNemicoLabel()
                 .setText("Vita: " + vitaNemicoAttuale + " / " + vitaNemicoMassima);
     }
+
+    /*
+     * Gestisce l'intera azione dell'attacco di squadra.
+     */
     public boolean eseguiAttaccoSquadra(
             List<Eroe> eroiDisponibili,
             StatoPartitaCorrente stato,
@@ -105,6 +131,10 @@ public class ControllerGioco {
 
         return !stato.getNemicoAttuale().isVivo();
     }
+
+    /*
+     * Gestisce un normale attacco dell'eroe contro il nemico.
+     */
     public boolean gestisciAttacco(
             StatoPartitaCorrente stato,
             Combattimento combattimento,
@@ -134,6 +164,10 @@ public class ControllerGioco {
 
         return !stato.getNemicoAttuale().isVivo();
     }
+
+    /*
+     * Gestisce le operazioni da eseguire quando un nemico viene sconfitto.
+     */
     public void gestisciNemicoSconfitto(
             StatoPartitaCorrente stato,
             GestoreCombattimentoGioco gestoreCombattimentoGioco
@@ -147,6 +181,10 @@ public class ControllerGioco {
             stato.setEroeDaPotenziare(stato.getEroeAttuale());
         }
     }
+
+    /*
+     * Applica il potenziamento all'eroe vincitore, se disponibile.
+     */
     public void potenziaVincitore(
             StatoPartitaCorrente stato,
             GestoreCombattimentoGioco gestoreCombattimentoGioco,
@@ -177,6 +215,10 @@ public class ControllerGioco {
 
         gestoreCombattimentoGioco.terminaPotenziamento();
     }
+
+    /*
+     * Aggiorna la schermata dopo che il giocatore ha scelto un eroe.
+     */
     public void aggiornaSchermataDopoSelezioneEroe(
             StatoPartitaCorrente stato,
             SchermataGioco schermataGioco
@@ -196,6 +238,10 @@ public class ControllerGioco {
                 .appendText("Hai scelto " + stato.getNomeGiocatoreAttuale() + ".\n");
     }
 
+    /*
+     * Avvia un nuovo incontro, prepara il nuovo nemico
+     * e aggiorna lo stato della partita.
+     */
     public Nemico avviaNuovoIncontro(
             StatoPartitaCorrente stato,
             GestoreCombattimentoGioco gestoreCombattimentoGioco,
@@ -217,5 +263,4 @@ public class ControllerGioco {
 
         return nemicoAttuale;
     }
-
 }

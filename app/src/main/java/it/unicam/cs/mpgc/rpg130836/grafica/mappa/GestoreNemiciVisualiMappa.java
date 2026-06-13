@@ -13,6 +13,9 @@ public class GestoreNemiciVisualiMappa {
     private final RisorseImmagini risorseImmagini;
     private final SchermataMappa schermataMappa;
 
+    /*
+     * Costruisce un'istanza di GestoreNemiciVisualiMappa.
+     */
     public GestoreNemiciVisualiMappa(
             RisorseImmagini risorseImmagini,
             SchermataMappa schermataMappa
@@ -21,6 +24,9 @@ public class GestoreNemiciVisualiMappa {
         this.schermataMappa = schermataMappa;
     }
 
+    /*
+     * Aggiunge i nemici alla mappa.
+     */
     public void aggiungiNemiciAllaMappa(
             Pane mappaPane,
             List<Nemico> nemiciDisponibili,

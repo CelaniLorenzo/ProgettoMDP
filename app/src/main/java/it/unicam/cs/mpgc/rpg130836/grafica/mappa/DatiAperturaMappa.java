@@ -14,6 +14,9 @@ public class DatiAperturaMappa {
     private final Button mappaIndietro;
     private final Button mappaAvanti;
 
+    /*
+     * Costruisce un'istanza di DatiAperturaMappa.
+     */
     public DatiAperturaMappa(
             Pane mappaPane,
             ImageView sfondoMappa,
@@ -30,26 +33,44 @@ public class DatiAperturaMappa {
         this.mappaAvanti = mappaAvanti;
     }
 
+    /*
+     * Restituisce il pannello della mappa.
+     */
     public Pane getMappaPane() {
         return mappaPane;
     }
 
+    /*
+     * Restituisce lo sfondo della mappa.
+     */
     public ImageView getSfondoMappa() {
         return sfondoMappa;
     }
 
+    /*
+     * Restituisce l'istruzioni.
+     */
     public Label getIstruzioni() {
         return istruzioni;
     }
 
+    /*
+     * Restituisce il pulsante per tornare al gioco.
+     */
     public Button getTornaGioco() {
         return tornaGioco;
     }
 
+    /*
+     * Restituisce il pulsante per tornare alla mappa precedente.
+     */
     public Button getMappaIndietro() {
         return mappaIndietro;
     }
 
+    /*
+     * Restituisce il pulsante per passare alla mappa successiva.
+     */
     public Button getMappaAvanti() {
         return mappaAvanti;
     }

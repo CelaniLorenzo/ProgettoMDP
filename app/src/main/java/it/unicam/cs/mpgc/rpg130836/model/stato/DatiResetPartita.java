@@ -24,6 +24,9 @@ public class DatiResetPartita {
     private final Eroe eroeAttuale;
     private final Nemico nemicoAttuale;
 
+    /*
+     * Costruisce un'istanza di DatiResetPartita.
+     */
     public DatiResetPartita(List<Eroe> eroi, List<Nemico> nemici) {
         this.eroi = eroi;
         this.nemici = nemici;
@@ -44,33 +47,98 @@ public class DatiResetPartita {
         this.eroeAttuale = null;
         this.nemicoAttuale = null;
     }
+
+    /*
+     * Restituisce il numero dell'incontro.
+     */
     public int getNumeroIncontro() {return numeroIncontro; }
+
+    /*
+     * Restituisce il nome del nemico attuale.
+     */
     public String getNomeNemicoAttuale() { return nomeNemicoAttuale; }
+
+    /*
+     * Restituisce la vita del nemico attuale.
+     */
     public int getVitaNemicoAttuale() { return vitaNemicoAttuale; }
+
+    /*
+     * Restituisce la vita massima del nemico.
+     */
     public int getVitaNemicoMassima() { return vitaNemicoMassima; }
+
+    /*
+     * Restituisce la vita del giocatore attuale.
+     */
     public int getVitaGiocatoreAttuale() { return vitaGiocatoreAttuale; }
+
+    /*
+     * Restituisce la vita massima del giocatore.
+     */
     public int getVitaGiocatoreMassima() { return vitaGiocatoreMassima; }
+
+    /*
+     * Restituisce il nome del giocatore attuale.
+     */
     public String getNomeGiocatoreAttuale() { return nomeGiocatoreAttuale; }
+
+    /*
+     * Restituisce il danno del giocatore.
+     */
     public int getDannoGiocatore() { return dannoGiocatore; }
+
+    /*
+     * Controlla se l'eroe è selezionato.
+     */
     public boolean isEroeSelezionato() { return eroeSelezionato; }
+
+    /*
+     * Controlla se il giocatore attacca per primo è valido.
+     */
     public boolean isGiocatoreAttaccaPerPrimo() { return giocatoreAttaccaPerPrimo; }
+
+    /*
+     * Controlla se l'attacco di squadra è stato usato.
+     */
     public boolean isAttaccoSquadraUsato() { return attaccoSquadraUsato; }
+
+    /*
+     * Controlla se il potenziamento è disponibile.
+     */
     public boolean isPotenziamentoDisponibile() { return potenziamentoDisponibile; }
+
+    /*
+     * Restituisce gli eroi.
+     */
     public List<Eroe> getEroi() {
         return eroi;
     }
 
+    /*
+     * Restituisce i nemici.
+     */
     public List<Nemico> getNemici() {
         return nemici;
     }
+
+    /*
+     * Restituisce l'eroe da potenziare.
+     */
     public Eroe getEroeDaPotenziare() {
         return eroeDaPotenziare;
     }
 
+    /*
+     * Restituisce l'eroe attuale.
+     */
     public Eroe getEroeAttuale() {
         return eroeAttuale;
     }
 
+    /*
+     * Restituisce il nemico attuale.
+     */
     public Nemico getNemicoAttuale() {
         return nemicoAttuale;
     }

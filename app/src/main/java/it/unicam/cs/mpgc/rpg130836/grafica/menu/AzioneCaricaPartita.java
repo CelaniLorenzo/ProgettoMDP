@@ -7,10 +7,16 @@ public class AzioneCaricaPartita {
 
     private final CaricamentoPartita caricamentoPartita;
 
+    /*
+     * Costruisce un'istanza di AzioneCaricaPartita.
+     */
     public AzioneCaricaPartita(CaricamentoPartita caricamentoPartita) {
         this.caricamentoPartita = Objects.requireNonNull(caricamentoPartita);
     }
 
+    /*
+     * Esegue l'azione associata.
+     */
     public void esegui() {
         caricamentoPartita.caricaPartitaDaMenu();
     }

@@ -8,10 +8,16 @@ public class TextAreaOutput implements Output {
 
     private final TextArea textArea;
 
+    /*
+     * Costruisce un'istanza di TextAreaOutput.
+     */
     public TextAreaOutput(TextArea textArea) {
         this.textArea = Objects.requireNonNull(textArea, "La TextArea non può essere null.");
     }
 
+    /*
+     * Stampa il messaggio ricevuto.
+     */
     @Override
     public void stampa(String messaggio) {
         textArea.appendText(messaggio + "\n");

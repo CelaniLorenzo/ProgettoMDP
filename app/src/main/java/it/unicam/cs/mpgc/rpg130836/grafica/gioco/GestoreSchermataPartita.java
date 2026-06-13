@@ -14,6 +14,9 @@ public class GestoreSchermataPartita {
     private final Runnable mostraMenu;
     private final Runnable mostraMappa;
 
+    /*
+     * Costruisce un'istanza di GestoreSchermataPartita.
+     */
     public GestoreSchermataPartita(
             DatiApplicazioneRpg dati,
             Runnable mostraMenu,
@@ -24,6 +27,9 @@ public class GestoreSchermataPartita {
         this.mostraMappa = Objects.requireNonNull(mostraMappa);
     }
 
+    /*
+     * Mostra la schermata gioco.
+     */
     public void mostraSchermataGioco() {
         dati.schermataGioco.mostra(dati.stage, dati.nomeGiocatoreAttuale);
 
@@ -47,6 +53,9 @@ public class GestoreSchermataPartita {
         configuraLayoutSchermataGioco(scegliEroeLabel, sceltaEroi);
     }
 
+    /*
+     * Carica la partita da file.
+     */
     public void caricaPartitaDaFile() {
         StatoGioco statoGioco =
                 dati.controllerSalvataggio.carica(
@@ -85,6 +94,9 @@ public class GestoreSchermataPartita {
         dati.statoPartitaCorrente.setEroeSelezionato(dati.eroeSelezionato);
     }
 
+    /*
+     * Resetta la partita.
+     */
     public void resettaPartita() {
         DatiResetPartita datiResetPartita =
                 dati.gestoreResetPartita.resettaPartita();
@@ -97,6 +109,9 @@ public class GestoreSchermataPartita {
         dati.statoPartitaCorrente.setPotenziamentoDiSquadra(false);
     }
 
+    /*
+     * Applica i dati di reset partita.
+     */
     private void applicaDatiResetPartita(DatiResetPartita datiResetPartita) {
         dati.statoPartitaCorrente.aggiornaDaReset(datiResetPartita);
         dati.numeroIncontro = datiResetPartita.getNumeroIncontro();
@@ -127,11 +142,17 @@ public class GestoreSchermataPartita {
         dati.eroeMappa = null;
     }
 
+    /*
+     * Applica i dati dei personaggi del gioco.
+     */
     private void applicaDatiPersonaggiGioco(DatiPersonaggiGioco personaggi) {
         dati.eroiDisponibili = personaggi.getEroi();
         dati.nemiciDisponibili = personaggi.getNemici();
     }
 
+    /*
+     * Crea la scelta degli eroi nella schermata di gioco.
+     */
     private HBox creaSceltaEroiSchermataGioco() {
         return dati.aperturaSchermataGioco.creaSceltaEroi(
                 dati.gestoreSchermataGioco,
@@ -142,6 +163,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Crea i pulsanti schermata gioco.
+     */
     private void creaPulsantiSchermataGioco() {
         PulsantiCombattimentoGioco pulsanti =
                 dati.aperturaSchermataGioco.creaPulsantiCombattimento(
@@ -154,6 +178,9 @@ public class GestoreSchermataPartita {
         dati.potenziaButton = pulsanti.getPotenziaButton();
     }
 
+    /*
+     * Configura le azioni schermata gioco.
+     */
     private void configuraAzioniSchermataGioco() {
         dati.aperturaSchermataGioco.configuraAzioniPulsanti(
                 dati.stage,
@@ -166,6 +193,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Inizializza il combattimento schermata gioco.
+     */
     private void inizializzaCombattimentoSchermataGioco() {
         DatiCombattimentoGioco datiCombattimento =
                 dati.aperturaSchermataGioco.creaDatiCombattimentoGioco(
@@ -182,6 +212,9 @@ public class GestoreSchermataPartita {
         dati.combattimento = datiCombattimento.getCombattimento();
     }
 
+    /*
+     * Configura il layout schermata gioco.
+     */
     private void configuraLayoutSchermataGioco(
             Label scegliEroeLabel,
             HBox sceltaEroi
@@ -195,6 +228,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Gestisce il passaggio al prossimo incontro.
+     */
     private void gestisciProssimoIncontro() {
         dati.gestoreSchermataGioco.gestisciProssimoIncontro(
                 dati.statoPartitaCorrente.isEroeSelezionato(),
@@ -205,6 +241,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Avvia un nuovo incontro.
+     */
     private void avviaNuovoIncontro() {
         dati.nemicoAttuale =
                 dati.controllerGioco.avviaNuovoIncontro(
@@ -222,6 +261,9 @@ public class GestoreSchermataPartita {
                 dati.statoPartitaCorrente.getVitaNemicoMassima();
     }
 
+    /*
+     * Gestisce l'attacco del giocatore.
+     */
     private void gestisciAttacco() {
         boolean nemicoSconfitto =
                 dati.controllerGioco.gestisciAttacco(
@@ -244,6 +286,9 @@ public class GestoreSchermataPartita {
         }
     }
 
+    /*
+     * Gestisce l'apertura della mappa.
+     */
     private void gestisciAperturaMappa() {
         if (dati.vitaNemicoAttuale > 0
                 && dati.nemicoAttuale != null
@@ -256,6 +301,9 @@ public class GestoreSchermataPartita {
         mostraMappa.run();
     }
 
+    /*
+     * Salva la partita corrente.
+     */
     private void salvaPartita() {
         dati.controllerSalvataggio.salvaPartita(
                 dati.statoPartitaCorrente.getNumeroIncontro(),
@@ -272,6 +320,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Aggiorna il variabili da stato gioco.
+     */
     private void aggiornaVariabiliDaStatoGioco(StatoGioco statoGioco) {
         dati.statoPartitaCorrente.aggiornaDaStatoGioco(statoGioco);
         dati.numeroIncontro = dati.statoPartitaCorrente.getNumeroIncontro();
@@ -297,6 +348,9 @@ public class GestoreSchermataPartita {
                 dati.statoPartitaCorrente.getVitaNemicoMassima();
     }
 
+    /*
+     * Seleziona l'eroe indicato.
+     */
     private void selezionaEroe(Eroe eroe) {
         dati.eroeAttuale = eroe;
         dati.statoPartitaCorrente.aggiornaEroeSelezionato(eroe);
@@ -306,6 +360,9 @@ public class GestoreSchermataPartita {
         );
     }
 
+    /*
+     * Esegue l'attacco di squadra.
+     */
     private void eseguiAttaccoSquadra() {
         boolean nemicoSconfitto =
                 dati.controllerGioco.eseguiAttaccoSquadra(
@@ -320,6 +377,9 @@ public class GestoreSchermataPartita {
         }
     }
 
+    /*
+     * Gestisce la sconfitta del nemico.
+     */
     private void gestisciNemicoSconfitto() {
         dati.controllerGioco.gestisciNemicoSconfitto(
                 dati.statoPartitaCorrente,
@@ -332,6 +392,9 @@ public class GestoreSchermataPartita {
                 dati.statoPartitaCorrente.getEroeDaPotenziare();
     }
 
+    /*
+     * Potenzia il vincitore.
+     */
     private void potenziaVincitore() {
         dati.controllerGioco.potenziaVincitore(
                 dati.statoPartitaCorrente,

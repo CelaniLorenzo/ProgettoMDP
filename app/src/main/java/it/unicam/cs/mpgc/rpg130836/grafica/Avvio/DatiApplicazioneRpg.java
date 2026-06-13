@@ -168,6 +168,14 @@ public class DatiApplicazioneRpg {
     public Button combattiMappaButton;
     public Button attaccoSquadraMappaButton;
     public Button potenziaMappaButton;
+
+    /*
+     * Costruisce l'oggetto che contiene tutti i dati principali
+     * dell'applicazione RPG.
+     *
+     * Salva lo Stage principale dell'applicazione, cioè la finestra
+     * su cui verranno mostrate le varie schermate del gioco.
+     */
     public DatiApplicazioneRpg(Stage stage) {
         this.stage = Objects.requireNonNull(stage);
     }

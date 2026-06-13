@@ -11,10 +11,16 @@ public class GestoreSchermataGioco {
 
     private final SchermataGioco schermataGioco;
 
+    /*
+     * Costruisce un'istanza di GestoreSchermataGioco.
+     */
     public GestoreSchermataGioco(SchermataGioco schermataGioco) {
         this.schermataGioco = schermataGioco;
     }
 
+    /*
+     * Crea la scelta degli eroi.
+     */
     public HBox creaSceltaEroi(
             Eroe eroe1,
             Eroe eroe2,
@@ -29,6 +35,10 @@ public class GestoreSchermataGioco {
                 schermataGioco.creaPulsanteEroe(eroe3, azioneEroe3)
         );
     }
+
+    /*
+     * Gestisce il passaggio al prossimo incontro.
+     */
     public void gestisciProssimoIncontro(
             boolean eroeSelezionato,
             int vitaNemicoAttuale,
@@ -56,18 +66,29 @@ public class GestoreSchermataGioco {
 
         azioneNuovoIncontro.run();
     }
+
+    /*
+     * Crea il pulsante dell'attacco di squadra.
+     */
     public Button creaAttaccoSquadraButton(Runnable azione) {
         Button button = new Button("Attacco di squadra");
         button.setOnAction(e -> azione.run());
         return button;
     }
 
+    /*
+     * Crea il pulsante di potenziamento.
+     */
     public Button creaPotenziaButton(Runnable azione) {
         Button button = new Button("Potenzia vincitore");
         button.setDisable(true);
         button.setOnAction(e -> azione.run());
         return button;
     }
+
+    /*
+     * Configura il layout gioco.
+     */
     public void configuraLayoutGioco(
             Label scegliEroeLabel,
             HBox sceltaEroi,
@@ -89,17 +110,28 @@ public class GestoreSchermataGioco {
                 potenziaButton
         );
     }
+
+    /*
+     * Crea l'attacco di squadra.
+     */
     public Button creaAttaccoSquadra(
             Runnable azioneAttaccoSquadra
     ) {
         return creaAttaccoSquadraButton(azioneAttaccoSquadra);
     }
 
+    /*
+     * Crea il potenzia.
+     */
     public Button creaPotenzia(
             Runnable azionePotenziamento
     ) {
         return creaPotenziaButton(azionePotenziamento);
     }
+
+    /*
+     * Configura i pulsanti schermata gioco.
+     */
     public void configuraPulsantiSchermataGioco(
             Stage stage,
             Runnable azioneProssimoIncontro,

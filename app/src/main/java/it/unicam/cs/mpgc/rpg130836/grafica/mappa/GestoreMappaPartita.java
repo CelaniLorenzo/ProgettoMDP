@@ -10,6 +10,9 @@ public class GestoreMappaPartita {
     private final Runnable mostraMenu;
     private final GestoreCombattimentoMappaPartita gestoreCombattimento;
 
+    /*
+     * Costruisce un'istanza di GestoreMappaPartita.
+     */
     public GestoreMappaPartita(
             DatiApplicazioneRpg dati,
             Runnable mostraMenu,
@@ -21,6 +24,9 @@ public class GestoreMappaPartita {
                 Objects.requireNonNull(gestoreCombattimento);
     }
 
+    /*
+     * Mostra la mappa di gioco.
+     */
     public void mostraMappaGioco() {
         DatiAperturaMappa datiAperturaMappa =
                 dati.aperturaMappa.creaDatiAperturaMappa(
@@ -83,6 +89,9 @@ public class GestoreMappaPartita {
         );
     }
 
+    /*
+     * Mostra la mappa precedente.
+     */
     private void mostraMappaPrecedente() {
         dati.controllerMappa.fermaMovimentoNemici(dati.gestoreNemiciMappa);
         dati.indiceMappaAttuale--;
@@ -94,6 +103,9 @@ public class GestoreMappaPartita {
         mostraMappaGioco();
     }
 
+    /*
+     * Mostra la mappa successiva.
+     */
     private void mostraMappaSuccessiva() {
         dati.controllerMappa.fermaMovimentoNemici(dati.gestoreNemiciMappa);
         dati.indiceMappaAttuale++;
@@ -105,6 +117,9 @@ public class GestoreMappaPartita {
         mostraMappaGioco();
     }
 
+    /*
+     * Aggiunge i nemici alla mappa.
+     */
     private void aggiungiNemiciAllaMappa(Pane mappaPane) {
         if (dati.nemiciDisponibili == null) {
             dati.nemiciDisponibili = dati.creatorePersonaggi.creaNemici();
@@ -124,6 +139,9 @@ public class GestoreMappaPartita {
         );
     }
 
+    /*
+     * Aggiunge gli eroi alla mappa.
+     */
     private void aggiungiEroiAllaMappa(Pane mappaPane) {
         if (dati.eroiDisponibili == null) {
             dati.eroiDisponibili = dati.creatorePersonaggi.creaEroi();
@@ -151,6 +169,9 @@ public class GestoreMappaPartita {
         );
     }
 
+    /*
+     * Applica la selezione dell'eroe sulla mappa.
+     */
     private void applicaSelezioneEroeMappa(
             DatiSelezioneEroeApplicazione datiSelezione
     ) {
@@ -164,6 +185,9 @@ public class GestoreMappaPartita {
         dati.eroeSelezionato = true;
     }
 
+    /*
+     * Applica i dati di preparazione del combattimento sulla mappa.
+     */
     private void applicaDatiPreparazioneCombattimentoMappa(
             DatiPreparazioneCombattimentoMappa datiPreparazione
     ) {

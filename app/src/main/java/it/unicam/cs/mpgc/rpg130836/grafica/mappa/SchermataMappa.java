@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 public class SchermataMappa {
 
+    /*
+     * Crea il pannello della mappa.
+     */
     public Pane creaPaneMappa(Stage stage) {
         Pane mappaPane = new Pane();
         mappaPane.setPrefSize(800, 600);
@@ -17,6 +20,10 @@ public class SchermataMappa {
 
         return mappaPane;
     }
+
+    /*
+     * Crea il sfondo.
+     */
     public ImageView creaSfondo(String percorsoMappa) {
 
         Image immagineMappa = new Image(
@@ -32,6 +39,10 @@ public class SchermataMappa {
 
         return sfondoMappa;
     }
+
+    /*
+     * Crea l'istruzioni.
+     */
     public Label creaIstruzioni() {
         Label istruzioni = new Label("Usa le frecce per muovere il personaggio");
         istruzioni.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
@@ -40,6 +51,10 @@ public class SchermataMappa {
 
         return istruzioni;
     }
+
+    /*
+     * Crea il pulsante per tornare al menu.
+     */
     public Button creaPulsanteTornaMenu(Runnable azione) {
 
         Button tornaMenu = new Button("Torna al menu");
@@ -51,6 +66,10 @@ public class SchermataMappa {
 
         return tornaMenu;
     }
+
+    /*
+     * Crea il sprite.
+     */
     public ImageView creaSprite(
             Image immagine,
             double x,

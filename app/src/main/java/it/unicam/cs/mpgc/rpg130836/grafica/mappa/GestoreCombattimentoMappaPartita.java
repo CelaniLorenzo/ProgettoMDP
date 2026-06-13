@@ -13,10 +13,16 @@ public class GestoreCombattimentoMappaPartita {
 
     private final DatiApplicazioneRpg dati;
 
+    /*
+     * Costruisce un'istanza di GestoreCombattimentoMappaPartita.
+     */
     public GestoreCombattimentoMappaPartita(DatiApplicazioneRpg dati) {
         this.dati = Objects.requireNonNull(dati);
     }
 
+    /*
+     * Avvia un incontro dalla mappa.
+     */
     public void avviaIncontroDaMappa(Nemico nemico, Stage stage) {
         if (!dati.controllerCombattimentoMappa.possoAvviareIncontro(
                 nemico,
@@ -54,6 +60,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Esegue un turno di combattimento sulla mappa.
+     */
     public void combattiTurnoSuMappa() {
         DatiTurnoMappa datiTurno =
                 dati.controllerCombattimentoMappa.combattiTurnoSuMappa(
@@ -83,6 +92,9 @@ public class GestoreCombattimentoMappaPartita {
         }
     }
 
+    /*
+     * Esegue l'attacco squadra su mappa.
+     */
     public void eseguiAttaccoSquadraSuMappa() {
         if (!dati.gestoreTurnoCombattimentoMappa.puoUsareAttaccoSquadraMappa(
                 dati.attaccoSquadraUsato,
@@ -137,6 +149,9 @@ public class GestoreCombattimentoMappaPartita {
         }
     }
 
+    /*
+     * Potenzia il vincitore sulla mappa.
+     */
     public void potenziaVincitoreSuMappa() {
         if (!dati.gestoreTurnoCombattimentoMappa.logMappaPresente(
                 dati.logMappa
@@ -177,6 +192,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Avvia il movimento dei nemici sulla mappa.
+     */
     public void avviaMovimentoNemiciSuMappa(Stage stage) {
         dati.gestoreMovimentoNemiciMappa =
                 dati.controllerMappa.creaGestoreMovimentoNemiciMappa(
@@ -192,6 +210,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Controlla il collisione nemici su mappa.
+     */
     public void controllaCollisioneNemiciSuMappa(Stage stage) {
         dati.controllerMappa.controllaCollisioneNemici(
                 dati.gestoreCollisioniMappa,
@@ -206,6 +227,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Applica i dati di incontro mappa.
+     */
     private void applicaDatiIncontroMappa(DatiIncontroMappa datiIncontro) {
         dati.combattimentoMappaAttivo = true;
         dati.nemicoAttuale = datiIncontro.getNemicoAttuale();
@@ -227,6 +251,9 @@ public class GestoreCombattimentoMappaPartita {
         dati.potenziamentoDiSquadra = false;
     }
 
+    /*
+     * Gestisce la sconfitta del nemico sulla mappa.
+     */
     private void gestisciNemicoSconfittoSuMappa() {
         if (dati.gestoreTurnoCombattimentoMappa.nemicoNonSconfitto(
                 dati.nemicoAttuale
@@ -263,6 +290,9 @@ public class GestoreCombattimentoMappaPartita {
         }
     }
 
+    /*
+     * Prepara il potenziamento dopo la vittoria.
+     */
     private void preparaPotenziamentoDopoVittoria() {
         dati.potenziamentoDisponibile = true;
         dati.gestoreTurnoCombattimentoMappa.abilitaPotenziamentoDopoVittoria(
@@ -294,6 +324,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Rimuove il nemico sconfitto dalla mappa.
+     */
     private void rimuoviNemicoSconfittoDallaMappa() {
         dati.gestoreRimozioneNemiciMappa.rimuoviNemicoSconfitto(
                 dati.mappaPaneAttuale,
@@ -304,6 +337,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Lancia il potere verso il nemico.
+     */
     private void lanciaPotereVersoNemico() {
         if (dati.mappaPaneAttuale == null
                 || dati.eroeMappa == null
@@ -327,6 +363,9 @@ public class GestoreCombattimentoMappaPartita {
         );
     }
 
+    /*
+     * Lancia il potere dell'eroe verso il nemico.
+     */
     private void lanciaPotereEroeVersoNemico(Eroe eroe) {
         if (dati.mappaPaneAttuale == null || dati.nemicoAttuale == null) {
             return;

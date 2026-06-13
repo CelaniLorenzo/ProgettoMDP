@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 
 public class GestoreRimozioneNemiciMappa {
 
+    /*
+     * Rimuove il nemico sconfitto.
+     */
     public void rimuoviNemicoSconfitto(Pane mappaPane,
                                        Nemico nemicoAttuale,
                                        List<ImageView> nemiciMappa,

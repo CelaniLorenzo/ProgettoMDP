@@ -5,5 +5,8 @@ public interface NavigazioneApplicazione extends
         CaricamentoPartita,
         AccessoSchermataGioco {
 
+    /*
+     * Mostra il menu principale dell'applicazione.
+     */
     void mostraMenu();
 }

@@ -6,10 +6,16 @@ import javafx.scene.image.ImageView;
 
 public class GestoreInizializzazioneMappa {
 
+    /*
+     * Crea il gestore degli incontri della mappa.
+     */
     public GestoreIncontriMappa creaGestoreIncontriMappa() {
         return new GestoreIncontriMappa();
     }
 
+    /*
+     * Crea il gestore del movimento dei nemici sulla mappa.
+     */
     public GestoreMovimentoNemiciMappa creaGestoreMovimentoNemiciMappa(
             List<ImageView> nemiciMappa,
             List<Nemico> nemiciAssociatiMappa

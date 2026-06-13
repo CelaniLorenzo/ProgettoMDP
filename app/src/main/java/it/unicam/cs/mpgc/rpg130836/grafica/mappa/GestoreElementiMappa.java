@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 
 public class GestoreElementiMappa {
 
+    /*
+     * Aggiunge l'elementi base alla mappa.
+     */
     public void aggiungiElementiBaseAllaMappa(
             Pane mappaPane,
             ImageView sfondoMappa,

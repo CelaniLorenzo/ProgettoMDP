@@ -8,6 +8,9 @@ public class GestoreCollisioniMappa {
 
     private static final double DISTANZA_COLLISIONE = 35;
 
+    /*
+     * Trova il nemico in collisione.
+     */
     public Nemico trovaNemicoInCollisione(
             ImageView eroeMappa,
             List<ImageView> nemiciMappa,

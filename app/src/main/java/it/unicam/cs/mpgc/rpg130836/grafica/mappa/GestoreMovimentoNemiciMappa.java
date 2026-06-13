@@ -23,6 +23,9 @@ public class GestoreMovimentoNemiciMappa {
     private final Random random;
     private long ultimoCambioDirezione;
 
+    /*
+     * Costruisce un'istanza di GestoreMovimentoNemiciMappa.
+     */
     public GestoreMovimentoNemiciMappa(List<ImageView> nemiciMappa,
                                        List<Nemico> nemiciAssociatiMappa) {
         this.nemiciMappa = nemiciMappa;
@@ -31,10 +34,16 @@ public class GestoreMovimentoNemiciMappa {
         this.random = new Random();
     }
 
+    /*
+     * Muove i nemici.
+     */
     public void muoviNemici() {
         muoviNemici(1.0 / 60.0);
     }
 
+    /*
+     * Muove i nemici.
+     */
     public void muoviNemici(double deltaSecondi) {
         aggiornaDirezioniSeNecessario();
 
@@ -75,6 +84,9 @@ public class GestoreMovimentoNemiciMappa {
         }
     }
 
+    /*
+     * Aggiorna le direzioni se necessario.
+     */
     private void aggiornaDirezioniSeNecessario() {
         direzioni.keySet().retainAll(nemiciMappa);
 
@@ -91,6 +103,9 @@ public class GestoreMovimentoNemiciMappa {
         }
     }
 
+    /*
+     * Crea una direzione casuale.
+     */
     private DirezioneMovimento creaDirezioneCasuale() {
         double x = random.nextDouble() * 2 - 1;
         double y = random.nextDouble() * 2 - 1;
@@ -103,6 +118,9 @@ public class GestoreMovimentoNemiciMappa {
         return new DirezioneMovimento(x / lunghezza, y / lunghezza);
     }
 
+    /*
+     * Limita un valore tra il minimo e il massimo indicati.
+     */
     private double limita(double valore, double minimo, double massimo) {
         return Math.max(minimo, Math.min(massimo, valore));
     }
@@ -117,10 +135,16 @@ public class GestoreMovimentoNemiciMappa {
             this.y = y;
         }
 
+        /*
+         * Inverte la direzione sull'asse X.
+         */
         void invertiX() {
             x = -x;
         }
 
+        /*
+         * Inverte la direzione sull'asse Y.
+         */
         void invertiY() {
             y = -y;
         }

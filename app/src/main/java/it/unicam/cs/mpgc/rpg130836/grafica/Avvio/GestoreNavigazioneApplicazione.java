@@ -13,6 +13,10 @@ public class GestoreNavigazioneApplicazione implements NavigazioneApplicazione {
     private final GestoreSchermataPartita gestoreSchermataPartita;
     private final GestoreMappaPartita gestoreMappaPartita;
 
+    /*
+     * Costruisce il gestore della navigazione principale
+     * dell'applicazione e inizializza i gestori delle schermate.
+     */
     public GestoreNavigazioneApplicazione(Stage stage) {
         this.dati = new DatiApplicazioneRpg(stage);
 
@@ -34,6 +38,9 @@ public class GestoreNavigazioneApplicazione implements NavigazioneApplicazione {
                 );
     }
 
+    /*
+     * Mostra il menu principale dell'applicazione.
+     */
     @Override
     public void mostraMenu() {
         GestoreApplicazione gestoreApplicazione =
@@ -42,12 +49,20 @@ public class GestoreNavigazioneApplicazione implements NavigazioneApplicazione {
         gestoreApplicazione.avvia(dati.stage);
     }
 
+    /*
+     * Avvia una nuova partita, resettando lo stato precedente
+     * e mostrando la mappa di gioco.
+     */
     @Override
     public void apriNuovaPartita() {
         gestoreSchermataPartita.resettaPartita();
         gestoreMappaPartita.mostraMappaGioco();
     }
 
+    /*
+     * Carica una partita salvata dal menu
+     * e aggiorna la schermata di gioco con i dati caricati.
+     */
     @Override
     public void caricaPartitaDaMenu() {
         GestoreAperturaGioco gestoreAperturaGioco =
@@ -57,6 +72,9 @@ public class GestoreNavigazioneApplicazione implements NavigazioneApplicazione {
         gestoreSchermataPartita.caricaPartitaDaFile();
     }
 
+    /*
+     * Mostra la schermata principale della partita.
+     */
     @Override
     public void mostraSchermataGioco() {
         gestoreSchermataPartita.mostraSchermataGioco();

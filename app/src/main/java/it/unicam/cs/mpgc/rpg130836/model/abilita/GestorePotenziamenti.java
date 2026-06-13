@@ -8,10 +8,16 @@ public class GestorePotenziamenti {
 
     private final Output output;
 
+    /*
+     * Costruisce un'istanza di GestorePotenziamenti.
+     */
     public GestorePotenziamenti(Output output) {
         this.output = Objects.requireNonNull(output, "Output non può essere null.");
     }
 
+    /*
+     * Potenzia il vincitore.
+     */
     public void potenziaVincitore(Combattente vincitore) {
         if (vincitore == null) {
             throw new IllegalArgumentException("Il vincitore non può essere null.");

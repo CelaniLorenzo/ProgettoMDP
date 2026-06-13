@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 
 public class SchermataMenu {
 
+    /*
+     * Mostra la schermata.
+     */
     public void mostra(
             Stage stage,
             Runnable nuovaPartita,

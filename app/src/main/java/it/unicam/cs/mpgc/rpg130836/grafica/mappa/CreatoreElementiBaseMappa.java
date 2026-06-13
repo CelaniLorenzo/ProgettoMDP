@@ -10,10 +10,16 @@ public class CreatoreElementiBaseMappa {
 
     private final SchermataMappa schermataMappa;
 
+    /*
+     * Costruisce un'istanza di CreatoreElementiBaseMappa.
+     */
     public CreatoreElementiBaseMappa(SchermataMappa schermataMappa) {
         this.schermataMappa = schermataMappa;
     }
 
+    /*
+     * Crea gli elementi richiesti.
+     */
     public ElementiBaseMappa crea(Stage stage,
                                   String immagineMappa,
                                   Runnable azioneTornaGioco) {

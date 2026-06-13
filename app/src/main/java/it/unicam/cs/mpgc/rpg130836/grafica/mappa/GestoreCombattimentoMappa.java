@@ -14,10 +14,16 @@ public class GestoreCombattimentoMappa {
 
     private final Dado dado;
 
+    /*
+     * Costruisce un'istanza di GestoreCombattimentoMappa.
+     */
     public GestoreCombattimentoMappa(Dado dado) {
         this.dado = dado;
     }
 
+    /*
+     * Controlla se è possibile combattere.
+     */
     public boolean puoCombattere(Eroe eroeAttuale,
                                  boolean eroeSelezionato,
                                  Nemico nemicoAttuale,
@@ -42,6 +48,9 @@ public class GestoreCombattimentoMappa {
         return true;
     }
 
+    /*
+     * Esegue il turno.
+     */
     public void eseguiTurno(Eroe eroeAttuale,
                             Nemico nemicoAttuale,
                             TextArea logMappa) {
@@ -52,6 +61,9 @@ public class GestoreCombattimentoMappa {
         combattimentoMappa.eseguiTurnoSingolo(eroeAttuale, nemicoAttuale);
     }
 
+    /*
+     * Scrive nel log le vite aggiornate.
+     */
     public void scriviViteAggiornate(Eroe eroeAttuale,
                                      Nemico nemicoAttuale,
                                      TextArea logMappa) {
@@ -68,6 +80,10 @@ public class GestoreCombattimentoMappa {
                         + nemicoAttuale.getVitaMassima() + "\n"
         );
     }
+
+    /*
+     * Aggiorna il log delle vite.
+     */
     public void aggiornaLogVite(Eroe eroe,
                                 Nemico nemico,
                                 TextArea logMappa) {
@@ -90,6 +106,10 @@ public class GestoreCombattimentoMappa {
                         + "\n"
         );
     }
+
+    /*
+     * Controlla se è possibile potenziare dalla mappa.
+     */
     public boolean puoPotenziareMappa(boolean potenziamentoDisponibile,
                                       TextArea logMappa) {
         if (!potenziamentoDisponibile) {
@@ -100,6 +120,9 @@ public class GestoreCombattimentoMappa {
         return true;
     }
 
+    /*
+     * Potenzia la squadra.
+     */
     public void potenziaSquadra(List<Eroe> eroiDisponibili,
                                 GestorePotenziamenti gestorePotenziamentiMappa) {
         for (Eroe eroe : eroiDisponibili) {
@@ -109,6 +132,9 @@ public class GestoreCombattimentoMappa {
         }
     }
 
+    /*
+     * Controlla se è possibile potenziare l'eroe.
+     */
     public boolean puoPotenziareEroe(Eroe eroeDaPotenziare,
                                      TextArea logMappa) {
         if (eroeDaPotenziare == null) {
@@ -118,10 +144,17 @@ public class GestoreCombattimentoMappa {
 
         return true;
     }
+
+    /*
+     * Controlla se il nemico sconfitto è valido.
+     */
     public boolean nemicoSconfittoValido(Nemico nemicoAttuale) {
         return nemicoAttuale != null && !nemicoAttuale.isVivo();
     }
 
+    /*
+     * Scrive il nemico sconfitto.
+     */
     public void scriviNemicoSconfitto(Nemico nemicoAttuale,
                                       TextArea logMappa) {
         if (logMappa != null) {
@@ -129,6 +162,9 @@ public class GestoreCombattimentoMappa {
         }
     }
 
+    /*
+     * Prepara il potenziamento di squadra.
+     */
     public void preparaPotenziamentoSquadra(DatiCombattimentoMappa datiCombattimentoMappa,
                                             TextArea logMappa) {
         datiCombattimentoMappa.setPotenziamentoDisponibile(true);
@@ -141,6 +177,9 @@ public class GestoreCombattimentoMappa {
         }
     }
 
+    /*
+     * Prepara il potenziamento dell'eroe.
+     */
     public void preparaPotenziamentoEroe(DatiCombattimentoMappa datiCombattimentoMappa,
                                          Eroe eroeAttuale,
                                          TextArea logMappa) {

@@ -16,12 +16,18 @@ public class SalvataggioJson implements Persistenza<StatoGioco>, ArchivioStatoGi
 
     private final Gson gson;
 
+    /*
+     * Costruisce un'istanza di SalvataggioJson.
+     */
     public SalvataggioJson() {
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
     }
 
+    /*
+     * Salva i dati nel percorso indicato.
+     */
     @Override
     public void salva(StatoGioco statoGioco, String percorso) throws IOException {
         if (statoGioco == null) {
@@ -36,6 +42,9 @@ public class SalvataggioJson implements Persistenza<StatoGioco>, ArchivioStatoGi
         }
     }
 
+    /*
+     * Carica i dati dal percorso indicato.
+     */
     @Override
     public StatoGioco carica(String percorso) throws IOException {
         Path path = Paths.get(percorso);
@@ -55,6 +64,9 @@ public class SalvataggioJson implements Persistenza<StatoGioco>, ArchivioStatoGi
         }
     }
 
+    /*
+     * Crea la cartella di destinazione se non esiste.
+     */
     private void creaCartellaSeNecessaria(Path path) throws IOException {
         Path cartella = path.getParent();
 

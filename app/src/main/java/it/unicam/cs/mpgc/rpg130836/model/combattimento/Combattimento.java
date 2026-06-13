@@ -9,11 +9,17 @@ public class Combattimento {
     private final Dado dado;
     private final Output output;
 
+    /*
+     * Costruisce un'istanza di Combattimento.
+     */
     public Combattimento(Dado dado, Output output) {
         this.dado = Objects.requireNonNull(dado, "Il dado non può essere null.");
         this.output = Objects.requireNonNull(output, "L'output non può essere null.");
     }
 
+    /*
+     * Esegue il combattimento tra i combattenti indicati.
+     */
     public Combattente combatti(Combattente primo, Combattente secondo) {
         validaCombattenti(primo, secondo);
 
@@ -32,6 +38,9 @@ public class Combattimento {
         return vincitore;
     }
 
+    /*
+     * Valida il combattenti.
+     */
     private void validaCombattenti(Combattente primo, Combattente secondo) {
         if (primo == null || secondo == null) {
             throw new IllegalArgumentException("I combattenti non possono essere null.");
@@ -42,12 +51,18 @@ public class Combattimento {
         }
     }
 
+    /*
+     * Stampa l'inizio.
+     */
     private void stampaInizio(Combattente primo, Combattente secondo) {
         output.stampa("");
         output.stampa("Inizia il combattimento tra " + primo.getNome() + " e " + secondo.getNome());
         output.stampa("-------");
     }
 
+    /*
+     * Esegue un singolo turno di combattimento.
+     */
     public void eseguiTurnoSingolo(Combattente primo, Combattente secondo) {
         int tiroPrimo;
         int tiroSecondo;
@@ -82,6 +97,9 @@ public class Combattimento {
         eseguiAttacchi(attaccante, difensore, tiroVincente);
     }
 
+    /*
+     * Esegue l'attacchi.
+     */
     private void eseguiAttacchi(Combattente attaccante, Combattente difensore, int tiroVincente) {
         int numeroAttacchi = calcolaNumeroAttacchi(tiroVincente);
 
@@ -97,10 +115,16 @@ public class Combattimento {
         }
     }
 
+    /*
+     * Calcola il numero di attacchi in base al tiro del dado.
+     */
     private int calcolaNumeroAttacchi(int tiroDado) {
         return (tiroDado <= 2) ? 1 : (tiroDado <= 4) ? 2 : 3;
     }
 
+    /*
+     * Determina il vincitore del combattimento.
+     */
     private Combattente determinaVincitore(Combattente primo, Combattente secondo) {
         if (primo.isVivo() && !secondo.isVivo()) return primo;
         if (secondo.isVivo() && !primo.isVivo()) return secondo;
@@ -108,6 +132,9 @@ public class Combattimento {
         throw new IllegalStateException("Combattimento terminato senza vincitore valido");
     }
 
+    /*
+     * Stampa lo stato.
+     */
     private void stampaStato(Combattente c) {
         output.stampa(c.getNome() +
                 " | Vita: " + c.getVita() + "/" + c.getVitaMassima() +

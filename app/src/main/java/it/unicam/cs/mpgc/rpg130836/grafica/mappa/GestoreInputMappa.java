@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 
 public class GestoreInputMappa {
 
+    /*
+     * Configura il movimento dell'eroe.
+     */
     public void configuraMovimentoEroe(Scene scene,
                                        ImageView eroeMappa,
                                        TextArea logMappa,
@@ -22,6 +25,9 @@ public class GestoreInputMappa {
 
             private long ultimoFrame;
 
+            /*
+             * Gestisce l'aggiornamento del timer o dell'evento ricevuto.
+             */
             @Override
             public void handle(long now) {
                 if (tastiPremuti.isEmpty()) {
@@ -44,6 +50,9 @@ public class GestoreInputMappa {
                 controllaCollisione.run();
             }
 
+            /*
+             * Calcola il tempo trascorso in secondi.
+             */
             private double calcolaDeltaSecondi(long now) {
                 if (ultimoFrame == 0) {
                     ultimoFrame = now;

@@ -4,5 +4,9 @@ import it.unicam.cs.mpgc.rpg130836.model.personaggi.Nemico;
 
 @FunctionalInterface
 public interface SelezioneNemicoMappa {
+
+    /*
+     * Seleziona l'elemento indicato.
+     */
     void seleziona(Nemico nemico);
 }

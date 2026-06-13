@@ -8,6 +8,9 @@ public class AzioniMenu {
     private final AzioneNuovaPartita azioneNuovaPartita;
     private final AzioneCaricaPartita azioneCaricaPartita;
 
+    /*
+     * Costruisce un'istanza di AzioniMenu.
+     */
     public AzioniMenu(NavigazioneApplicazione navigazione) {
         this(
                 new AzioneNuovaPartita(navigazione),
@@ -15,6 +18,9 @@ public class AzioniMenu {
         );
     }
 
+    /*
+     * Costruisce un'istanza di AzioniMenu.
+     */
     public AzioniMenu(
             AzioneNuovaPartita azioneNuovaPartita,
             AzioneCaricaPartita azioneCaricaPartita
@@ -23,10 +29,16 @@ public class AzioniMenu {
         this.azioneCaricaPartita = Objects.requireNonNull(azioneCaricaPartita);
     }
 
+    /*
+     * Avvia una nuova partita.
+     */
     public void nuovaPartita() {
         azioneNuovaPartita.esegui();
     }
 
+    /*
+     * Carica la partita.
+     */
     public void caricaPartita() {
         azioneCaricaPartita.esegui();
     }

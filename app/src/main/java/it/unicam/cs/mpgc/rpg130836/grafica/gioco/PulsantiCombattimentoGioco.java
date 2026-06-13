@@ -7,6 +7,9 @@ public class PulsantiCombattimentoGioco {
     private final Button attaccoSquadraButton;
     private final Button potenziaButton;
 
+    /*
+     * Costruisce un'istanza di PulsantiCombattimentoGioco.
+     */
     public PulsantiCombattimentoGioco(
             Button attaccoSquadraButton,
             Button potenziaButton
@@ -15,10 +18,16 @@ public class PulsantiCombattimentoGioco {
         this.potenziaButton = potenziaButton;
     }
 
+    /*
+     * Restituisce il pulsante dell'attacco di squadra.
+     */
     public Button getAttaccoSquadraButton() {
         return attaccoSquadraButton;
     }
 
+    /*
+     * Restituisce il pulsante di potenziamento.
+     */
     public Button getPotenziaButton() {
         return potenziaButton;
     }

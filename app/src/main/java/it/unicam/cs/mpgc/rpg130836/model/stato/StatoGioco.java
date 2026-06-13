@@ -26,6 +26,9 @@ public class StatoGioco {
     private int vitaNemicoAttuale;
     private int vitaNemicoMassima;
 
+    /*
+     * Costruisce un'istanza di StatoGioco.
+     */
     public StatoGioco() {
         this.eroi = new ArrayList<>();
         this.nemici = new ArrayList<>();
@@ -33,6 +36,9 @@ public class StatoGioco {
         this.esitoPartita = "Partita non conclusa";
     }
 
+    /*
+     * Costruisce un'istanza di StatoGioco.
+     */
     public StatoGioco(
             List<DatiPersonaggio> eroi,
             List<DatiPersonaggio> nemici,
@@ -47,6 +53,9 @@ public class StatoGioco {
         this.esitoPartita = esitoPartita;
     }
 
+    /*
+     * Crea lo stato a partire dai dati della partita.
+     */
     public static StatoGioco creaDaPartita(
             List<Eroe> eroi,
             List<Nemico> nemici,
@@ -65,6 +74,10 @@ public class StatoGioco {
                 esitoPartita
         );
     }
+
+    /*
+     * Crea lo stato a partire dai dati della schermata grafica.
+     */
     public static StatoGioco creaDaGui(
             int numeroIncontro,
             boolean eroeSelezionato,
@@ -95,6 +108,9 @@ public class StatoGioco {
         return stato;
     }
 
+    /*
+     * Crea i dati di eroi.
+     */
     private static List<DatiPersonaggio> creaDatiEroi(List<Eroe> eroi) {
         List<DatiPersonaggio> dati = new ArrayList<>();
 
@@ -105,6 +121,9 @@ public class StatoGioco {
         return dati;
     }
 
+    /*
+     * Crea i dati di nemici.
+     */
     private static List<DatiPersonaggio> creaDatiNemici(List<Nemico> nemici) {
         List<DatiPersonaggio> dati = new ArrayList<>();
 
@@ -115,61 +134,107 @@ public class StatoGioco {
         return dati;
     }
 
+    /*
+     * Restituisce gli eroi.
+     */
     public List<DatiPersonaggio> getEroi() {
         return eroi;
     }
 
+    /*
+     * Restituisce i nemici.
+     */
     public List<DatiPersonaggio> getNemici() {
         return nemici;
     }
 
+    /*
+     * Restituisce gli incontri disputati.
+     */
     public int getIncontriDisputati() {
         return incontriDisputati;
     }
 
+    /*
+     * Restituisce l'ultimo vincitore.
+     */
     public String getUltimoVincitore() {
         return ultimoVincitore;
     }
 
+    /*
+     * Restituisce l'esito partita.
+     */
     public String getEsitoPartita() {
         return esitoPartita;
     }
+
+    /*
+     * Restituisce il numero dell'incontro.
+     */
     public int getNumeroIncontro() {
         return numeroIncontro;
     }
 
+    /*
+     * Controlla se l'eroe è selezionato.
+     */
     public boolean isEroeSelezionato() {
         return eroeSelezionato;
     }
 
+    /*
+     * Controlla se l'attacco di squadra è stato usato.
+     */
     public boolean isAttaccoSquadraUsato() {
         return attaccoSquadraUsato;
     }
 
+    /*
+     * Restituisce il nome del giocatore attuale.
+     */
     public String getNomeGiocatoreAttuale() {
         return nomeGiocatoreAttuale;
     }
 
+    /*
+     * Restituisce la vita del giocatore attuale.
+     */
     public int getVitaGiocatoreAttuale() {
         return vitaGiocatoreAttuale;
     }
 
+    /*
+     * Restituisce la vita massima del giocatore.
+     */
     public int getVitaGiocatoreMassima() {
         return vitaGiocatoreMassima;
     }
 
+    /*
+     * Restituisce il danno del giocatore.
+     */
     public int getDannoGiocatore() {
         return dannoGiocatore;
     }
 
+    /*
+     * Restituisce il nome del nemico attuale.
+     */
     public String getNomeNemicoAttuale() {
         return nomeNemicoAttuale;
     }
 
+    /*
+     * Restituisce la vita del nemico attuale.
+     */
     public int getVitaNemicoAttuale() {
         return vitaNemicoAttuale;
     }
 
+    /*
+     * Restituisce la vita massima del nemico.
+     */
     public int getVitaNemicoMassima() {
         return vitaNemicoMassima;
     }

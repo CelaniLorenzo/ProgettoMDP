@@ -13,6 +13,9 @@ public class DatiPreparazioneCombattimentoMappa {
     private final Button attaccoSquadraMappaButton;
     private final Button potenziaMappaButton;
 
+    /*
+     * Costruisce un'istanza di DatiPreparazioneCombattimentoMappa.
+     */
     public DatiPreparazioneCombattimentoMappa(
             TextArea logMappa,
             GestorePotenziamenti gestorePotenziamentiMappa,
@@ -29,26 +32,44 @@ public class DatiPreparazioneCombattimentoMappa {
         this.potenziaMappaButton = potenziaMappaButton;
     }
 
+    /*
+     * Restituisce il log della mappa.
+     */
     public TextArea getLogMappa() {
         return logMappa;
     }
 
+    /*
+     * Restituisce il gestore di potenziamenti mappa.
+     */
     public GestorePotenziamenti getGestorePotenziamentiMappa() {
         return gestorePotenziamentiMappa;
     }
 
+    /*
+     * Restituisce il gestore di combattimento mappa.
+     */
     public GestoreCombattimentoMappa getGestoreCombattimentoMappa() {
         return gestoreCombattimentoMappa;
     }
 
+    /*
+     * Restituisce il pulsante di combattimento sulla mappa.
+     */
     public Button getCombattiMappaButton() {
         return combattiMappaButton;
     }
 
+    /*
+     * Restituisce il pulsante dell'attacco di squadra sulla mappa.
+     */
     public Button getAttaccoSquadraMappaButton() {
         return attaccoSquadraMappaButton;
     }
 
+    /*
+     * Restituisce il pulsante di potenziamento sulla mappa.
+     */
     public Button getPotenziaMappaButton() {
         return potenziaMappaButton;
     }

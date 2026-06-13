@@ -5,6 +5,9 @@ import javafx.scene.control.TextArea;
 
 public class GestoreInterfacciaMappa {
 
+    /*
+     * Crea il log della mappa.
+     */
     public TextArea creaLogMappa() {
         TextArea logMappa = new TextArea();
 
@@ -20,6 +23,10 @@ public class GestoreInterfacciaMappa {
 
         return logMappa;
     }
+
+    /*
+     * Crea il pulsante per combattere.
+     */
     public Button creaPulsanteCombatti(Runnable azione) {
         Button button = new Button("Combatti turno");
 

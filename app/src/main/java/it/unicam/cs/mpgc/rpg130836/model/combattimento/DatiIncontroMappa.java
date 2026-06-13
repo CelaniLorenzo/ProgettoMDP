@@ -15,6 +15,9 @@ public class DatiIncontroMappa {
     private final int dannoGiocatore;
     private final boolean eroeSelezionato;
 
+    /*
+     * Costruisce un'istanza di DatiIncontroMappa.
+     */
     public DatiIncontroMappa(
             Nemico nemicoAttuale,
             String nomeNemicoAttuale,

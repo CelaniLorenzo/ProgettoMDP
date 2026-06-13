@@ -30,14 +30,23 @@ public class Gioco {
     private int incontriDisputati;
     private String ultimoVincitore;
 
+    /*
+     * Costruisce un'istanza di Gioco.
+     */
     public Gioco() {
         this(null, new ConsoleOutput());
     }
 
+    /*
+     * Costruisce un'istanza di Gioco.
+     */
     public Gioco(ArchivioStatoGioco salvataggio) {
         this(salvataggio, new ConsoleOutput());
     }
 
+    /*
+     * Costruisce un'istanza di Gioco.
+     */
     public Gioco(ArchivioStatoGioco salvataggio, Output output) {
         CreatorePersonaggi creatorePersonaggi = new CreatorePersonaggi();
         this.output = Objects.requireNonNull(output);
@@ -50,9 +59,17 @@ public class Gioco {
         this.incontriDisputati = 0;
         this.ultimoVincitore = "Nessuno";
     }
+
+    /*
+     * Stampa il messaggio ricevuto.
+     */
     private void stampa(String messaggio) {
         output.stampa(messaggio);
     }
+
+    /*
+     * Avvia la partita.
+     */
     public void avviaPartita() {
         stampa("Inizio partita RPG Iron Hulk.");
 
@@ -66,6 +83,9 @@ public class Gioco {
         stampa(calcolaEsitoPartita());
     }
 
+    /*
+     * Disputa un incontro tra eroe e nemico.
+     */
     private void disputaIncontro(Eroe eroe, Nemico nemico) {
         stampa("");
         stampa("Nuovo combattimento: " + eroe.getNome() + " contro " + nemico.getNome());
@@ -80,6 +100,9 @@ public class Gioco {
         gestorePotenziamenti.potenziaVincitore(vincitore);
     }
 
+    /*
+     * Controlla se esiste almeno un eroe vivo.
+     */
     private boolean esisteEroeVivo() {
         for (Eroe eroe : eroi) {
             if (eroe.isVivo()) {
@@ -90,6 +113,9 @@ public class Gioco {
         return false;
     }
 
+    /*
+     * Controlla se esiste almeno un nemico vivo.
+     */
     private boolean esisteNemicoVivo() {
         for (Nemico nemico : nemici) {
             if (nemico.isVivo()) {
@@ -100,6 +126,9 @@ public class Gioco {
         return false;
     }
 
+    /*
+     * Trova il primo eroe vivo.
+     */
     private Eroe trovaPrimoEroeVivo() {
         for (Eroe eroe : eroi) {
             if (eroe.isVivo()) {
@@ -110,6 +139,9 @@ public class Gioco {
         throw new IllegalStateException("Non ci sono eroi vivi.");
     }
 
+    /*
+     * Trova il primo nemico vivo.
+     */
     private Nemico trovaPrimoNemicoVivo() {
         for (Nemico nemico : nemici) {
             if (nemico.isVivo()) {
@@ -120,18 +152,30 @@ public class Gioco {
         throw new IllegalStateException("Non ci sono nemici vivi.");
     }
 
+    /*
+     * Salva la partita corrente.
+     */
     public void salvaPartita() throws IOException {
         salvaPartita(PERCORSO_SALVATAGGIO);
     }
 
+    /*
+     * Salva la partita corrente.
+     */
     public void salvaPartita(String percorso) throws IOException {
         salvataggioConfigurato().salva(creaStatoGioco(), percorso);
     }
 
+    /*
+     * Carica lo stato del gioco salvato.
+     */
     public StatoGioco caricaStatoGioco(String percorso) throws IOException {
         return salvataggioConfigurato().carica(percorso);
     }
 
+    /*
+     * Restituisce il gestore di salvataggio configurato.
+     */
     private ArchivioStatoGioco salvataggioConfigurato() {
         if (salvataggio == null) {
             throw new IllegalStateException(
@@ -142,6 +186,9 @@ public class Gioco {
         return salvataggio;
     }
 
+    /*
+     * Crea lo stato del gioco.
+     */
     public StatoGioco creaStatoGioco() {
         return StatoGioco.creaDaPartita(
                 eroi,
@@ -152,6 +199,9 @@ public class Gioco {
         );
     }
 
+    /*
+     * Calcola l'esito finale della partita.
+     */
     private String calcolaEsitoPartita() {
         if (esisteEroeVivo() && !esisteNemicoVivo()) {
             return "Gli eroi hanno vinto.";
@@ -164,18 +214,30 @@ public class Gioco {
         return "Partita in corso.";
     }
 
+    /*
+     * Restituisce gli eroi.
+     */
     public List<Eroe> getEroi() {
         return Collections.unmodifiableList(eroi);
     }
 
+    /*
+     * Restituisce i nemici.
+     */
     public List<Nemico> getNemici() {
         return Collections.unmodifiableList(nemici);
     }
 
+    /*
+     * Restituisce gli incontri disputati.
+     */
     public int getIncontriDisputati() {
         return incontriDisputati;
     }
 
+    /*
+     * Restituisce l'ultimo vincitore.
+     */
     public String getUltimoVincitore() {
         return ultimoVincitore;
     }

@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 
 public class GestorePulsantiMappa {
 
+    /*
+     * Crea il pulsante per combattere.
+     */
     public Button creaPulsanteCombatti(Runnable azione) {
         Button button = new Button("Combatti turno");
 
@@ -17,6 +20,10 @@ public class GestorePulsantiMappa {
 
         return button;
     }
+
+    /*
+     * Crea il pulsante dell'attacco di squadra sulla mappa.
+     */
     public Button creaPulsanteAttaccoSquadraMappa(Runnable azione) {
         Image immagineAttaccoSquadra = new Image(
                 Objects.requireNonNull(
@@ -38,6 +45,10 @@ public class GestorePulsantiMappa {
 
         return button;
     }
+
+    /*
+     * Crea il pulsante di potenziamento sulla mappa.
+     */
     public Button creaPulsantePotenziaMappa(Runnable azione) {
         Button button = new Button("Potenzia vincitore");
         button.setLayoutX(620);
@@ -46,6 +57,10 @@ public class GestorePulsantiMappa {
         button.setOnAction(e -> azione.run());
         return button;
     }
+
+    /*
+     * Crea il pulsante per passare alla mappa successiva.
+     */
     public Button creaPulsanteMappaAvanti(Runnable azione) {
         Button button = new Button("Mappa avanti");
         button.setLayoutX(270);
@@ -53,6 +68,10 @@ public class GestorePulsantiMappa {
         button.setOnAction(e -> azione.run());
         return button;
     }
+
+    /*
+     * Crea il pulsante per tornare alla mappa precedente.
+     */
     public Button creaPulsanteMappaIndietro(Runnable azione) {
         Button button = new Button("Mappa indietro");
         button.setLayoutX(140);
@@ -61,6 +80,9 @@ public class GestorePulsantiMappa {
         return button;
     }
 
+    /*
+     * Abilita i pulsanti combattimento mappa.
+     */
     public void abilitaPulsantiCombattimentoMappa(Button combattiButton,
                                                   Button attaccoSquadraButton,
                                                   Button potenziaButton) {

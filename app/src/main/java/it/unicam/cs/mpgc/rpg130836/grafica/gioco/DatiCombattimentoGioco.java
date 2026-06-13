@@ -9,6 +9,9 @@ public class DatiCombattimentoGioco {
     private final GestorePotenziamenti gestorePotenziamentiGioco;
     private final Combattimento combattimento;
 
+    /*
+     * Costruisce un'istanza di DatiCombattimentoGioco.
+     */
     public DatiCombattimentoGioco(
             GestoreCombattimentoGioco gestoreCombattimentoGioco,
             GestorePotenziamenti gestorePotenziamentiGioco,
@@ -19,14 +22,23 @@ public class DatiCombattimentoGioco {
         this.combattimento = combattimento;
     }
 
+    /*
+     * Restituisce il gestore di combattimento gioco.
+     */
     public GestoreCombattimentoGioco getGestoreCombattimentoGioco() {
         return gestoreCombattimentoGioco;
     }
 
+    /*
+     * Restituisce il gestore di potenziamenti gioco.
+     */
     public GestorePotenziamenti getGestorePotenziamentiGioco() {
         return gestorePotenziamentiGioco;
     }
 
+    /*
+     * Restituisce il combattimento.
+     */
     public Combattimento getCombattimento() {
         return combattimento;
     }

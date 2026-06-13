@@ -8,6 +8,9 @@ public class DatiTurnoMappa {
     private final int vitaNemicoMassima;
     private final boolean nemicoSconfitto;
 
+    /*
+     * Costruisce un'istanza di DatiTurnoMappa.
+     */
     public DatiTurnoMappa(
             int vitaGiocatoreAttuale,
             int vitaGiocatoreMassima,

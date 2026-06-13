@@ -7,16 +7,25 @@ public class GestoreNemiciMappa {
 
     private AnimationTimer movimentoNemiciTimer;
 
+    /*
+     * Ferma il movimento dei nemici.
+     */
     public void fermaMovimentoNemici() {
         if (movimentoNemiciTimer != null) {
             movimentoNemiciTimer.stop();
         }
     }
 
+    /*
+     * Avvia il movimento dei nemici.
+     */
     public void avviaMovimentoNemici(Runnable azioneMovimento) {
         avviaMovimentoNemici(deltaSecondi -> azioneMovimento.run());
     }
 
+    /*
+     * Avvia il movimento dei nemici.
+     */
     public void avviaMovimentoNemici(DoubleConsumer azioneMovimento) {
         fermaMovimentoNemici();
 
@@ -24,6 +33,9 @@ public class GestoreNemiciMappa {
 
             private long ultimoFrame;
 
+            /*
+             * Gestisce l'aggiornamento del timer o dell'evento ricevuto.
+             */
             @Override
             public void handle(long now) {
                 double deltaSecondi = calcolaDeltaSecondi(now);
@@ -31,6 +43,9 @@ public class GestoreNemiciMappa {
                 azioneMovimento.accept(deltaSecondi);
             }
 
+            /*
+             * Calcola il tempo trascorso in secondi.
+             */
             private double calcolaDeltaSecondi(long now) {
                 if (ultimoFrame == 0) {
                     ultimoFrame = now;

@@ -25,45 +25,79 @@ public class SchermataGioco {
     private Button apriMappaButton;
     private Button tornaMenuButton;
 
+    /*
+     * Restituisce l'area di log.
+     */
     public TextArea getLogArea() {
         return logArea;
     }
 
+    /*
+     * Restituisce l'etichetta del nome del giocatore.
+     */
     public Label getNomeGiocatoreLabel() {
         return nomeGiocatoreLabel;
     }
 
+    /*
+     * Restituisce l'etichetta della vita del giocatore.
+     */
     public Label getVitaGiocatoreLabel() {
         return vitaGiocatoreLabel;
     }
 
+    /*
+     * Restituisce l'etichetta del nome del nemico.
+     */
     public Label getNomeNemicoLabel() {
         return nomeNemicoLabel;
     }
 
+    /*
+     * Restituisce l'etichetta della vita del nemico.
+     */
     public Label getVitaNemicoLabel() {
         return vitaNemicoLabel;
     }
+
+    /*
+     * Restituisce il pulsante del prossimo incontro.
+     */
     public Button getProssimoIncontroButton() {
         return prossimoIncontroButton;
     }
 
+    /*
+     * Restituisce il pulsante di attacco.
+     */
     public Button getAttaccaButton() {
         return attaccaButton;
     }
 
+    /*
+     * Restituisce il pulsante di salvataggio.
+     */
     public Button getSalvaButton() {
         return salvaButton;
     }
 
+    /*
+     * Restituisce il pulsante di apertura della mappa.
+     */
     public Button getApriMappaButton() {
         return apriMappaButton;
     }
 
+    /*
+     * Restituisce il pulsante per tornare al menu.
+     */
     public Button getTornaMenuButton() {
         return tornaMenuButton;
     }
 
+    /*
+     * Mostra la schermata.
+     */
     public void mostra(Stage stage, String nomeGiocatoreAttuale) {
         Label titolo = new Label("PARTITA IN CORSO");
 
@@ -102,14 +136,26 @@ public class SchermataGioco {
         Scene scene = new Scene(root, 800, 500);
         stage.setScene(scene);
     }
+
+    /*
+     * Crea il titolo.
+     */
     public Label creaTitolo() {
         return new Label("PARTITA IN CORSO");
     }
+
+    /*
+     * Crea il pulsante dell'eroe.
+     */
     public Button creaPulsanteEroe(Eroe eroe, Runnable azione) {
         Button bottone = new Button(eroe.getNome());
         bottone.setOnAction(e -> azione.run());
         return bottone;
     }
+
+    /*
+     * Crea la scelta degli eroi.
+     */
     public HBox creaSceltaEroi(Button eroe1, Button eroe2, Button eroe3) {
         HBox sceltaEroi = new HBox(10);
         sceltaEroi.setAlignment(Pos.CENTER);
@@ -117,14 +163,26 @@ public class SchermataGioco {
 
         return sceltaEroi;
     }
+
+    /*
+     * Crea l'etichetta scelta eroe.
+     */
     public Label creaEtichettaSceltaEroe() {
         return new Label("Scegli eroe:");
     }
+
+    /*
+     * Crea il pulsante.
+     */
     public Button creaPulsante(String testo, Runnable azione) {
         Button bottone = new Button(testo);
         bottone.setOnAction(e -> azione.run());
         return bottone;
     }
+
+    /*
+     * Restituisce il root.
+     */
     public VBox getRoot() {
         return root;
     }

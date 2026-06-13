@@ -11,23 +11,38 @@ public class GestoreMovimentoEroe {
     private static final double VELOCITA_EROE_PIXEL_AL_SECONDO = 220.0;
     private static final double PASSO_TASTO_SINGOLO = 3.2;
 
+    /*
+     * Restituisce l'eroe x.
+     */
     public double getEroeX() {
         return eroeX;
     }
 
+    /*
+     * Restituisce l'eroe y.
+     */
     public double getEroeY() {
         return eroeY;
     }
 
+    /*
+     * Imposta il posizione.
+     */
     public void impostaPosizione(double x, double y) {
         this.eroeX = x;
         this.eroeY = y;
     }
 
+    /*
+     * Muove l'elemento gestito.
+     */
     public void muovi(Set<KeyCode> tastiPremuti) {
         muovi(tastiPremuti, 1.0 / 60.0);
     }
 
+    /*
+     * Muove l'elemento gestito.
+     */
     public void muovi(Set<KeyCode> tastiPremuti, double deltaSecondi) {
         double movimentoX = 0;
         double movimentoY = 0;
@@ -58,6 +73,9 @@ public class GestoreMovimentoEroe {
         limitaPosizione();
     }
 
+    /*
+     * Muove l'elemento gestito.
+     */
     public void muovi(String direzione) {
         switch (direzione) {
             case "UP" -> eroeY -= PASSO_TASTO_SINGOLO;
@@ -71,6 +89,9 @@ public class GestoreMovimentoEroe {
         limitaPosizione();
     }
 
+    /*
+     * Limita la posizione entro i bordi della mappa.
+     */
     private void limitaPosizione() {
         eroeX = Math.max(0, Math.min(760, eroeX));
         eroeY = Math.max(0, Math.min(560, eroeY));

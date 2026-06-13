@@ -16,6 +16,9 @@ public class ControllerCombattimentoMappa {
     private final GestoreAvvioIncontroMappa gestoreAvvioIncontroMappa;
     private final GestorePulsantiMappa gestorePulsantiMappa;
 
+    /*
+     * Costruisce un'istanza di ControllerCombattimentoMappa.
+     */
     public ControllerCombattimentoMappa(
             GestoreAvvioIncontroMappa gestoreAvvioIncontroMappa,
             GestorePulsantiMappa gestorePulsantiMappa
@@ -24,6 +27,9 @@ public class ControllerCombattimentoMappa {
         this.gestorePulsantiMappa = gestorePulsantiMappa;
     }
 
+    /*
+     * Controlla se è possibile avviare un incontro.
+     */
     public boolean possoAvviareIncontro(
             Nemico nemico,
             boolean potenziamentoDisponibile,
@@ -38,6 +44,9 @@ public class ControllerCombattimentoMappa {
         );
     }
 
+    /*
+     * Scrive nel log il messaggio dell'incontro.
+     */
     public void scriviLogIncontro(
             TextArea logMappa,
             String nomeNemicoAttuale,
@@ -58,6 +67,9 @@ public class ControllerCombattimentoMappa {
         );
     }
 
+    /*
+     * Abilita i pulsanti combattimento mappa.
+     */
     public void abilitaPulsantiCombattimentoMappa(
             Button combattiMappaButton,
             Button attaccoSquadraMappaButton,
@@ -69,6 +81,10 @@ public class ControllerCombattimentoMappa {
                 potenziaMappaButton
         );
     }
+
+    /*
+     * Prepara l'incontro mappa.
+     */
     public DatiIncontroMappa preparaIncontroMappa(
             Nemico nemico,
             Eroe eroeAttuale,
@@ -144,6 +160,10 @@ public class ControllerCombattimentoMappa {
                 eroeSelezionato
         );
     }
+
+    /*
+     * Esegue un turno di combattimento sulla mappa.
+     */
     public DatiTurnoMappa combattiTurnoSuMappa(
             GestoreTurnoCombattimentoMappa gestoreTurnoCombattimentoMappa,
             Dado dado,

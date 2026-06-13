@@ -12,6 +12,9 @@ public class ElementiBaseMappa {
     private final Label istruzioni;
     private final Button tornaGioco;
 
+    /*
+     * Costruisce un'istanza di ElementiBaseMappa.
+     */
     public ElementiBaseMappa(Pane mappaPane,
                              ImageView sfondoMappa,
                              Label istruzioni,
@@ -22,18 +25,30 @@ public class ElementiBaseMappa {
         this.tornaGioco = tornaGioco;
     }
 
+    /*
+     * Restituisce il pannello della mappa.
+     */
     public Pane getMappaPane() {
         return mappaPane;
     }
 
+    /*
+     * Restituisce lo sfondo della mappa.
+     */
     public ImageView getSfondoMappa() {
         return sfondoMappa;
     }
 
+    /*
+     * Restituisce l'istruzioni.
+     */
     public Label getIstruzioni() {
         return istruzioni;
     }
 
+    /*
+     * Restituisce il pulsante per tornare al gioco.
+     */
     public Button getTornaGioco() {
         return tornaGioco;
     }

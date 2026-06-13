@@ -12,10 +12,18 @@ import javafx.stage.Stage;
 
 public class AperturaSchermataGioco {
 
+    /*
+     * Crea l'etichetta che invita il giocatore
+     * a scegliere l'eroe da utilizzare.
+     */
     public Label creaEtichettaSceltaEroe(SchermataGioco schermataGioco) {
         return schermataGioco.creaEtichettaSceltaEroe();
     }
 
+    /*
+     * Crea il contenitore con i pulsanti o elementi grafici
+     * per scegliere uno tra gli eroi disponibili.
+     */
     public HBox creaSceltaEroi(
             GestoreSchermataGioco gestoreSchermataGioco,
             List<Eroe> eroiDisponibili,
@@ -32,6 +40,12 @@ public class AperturaSchermataGioco {
                 selezionaEroe3
         );
     }
+
+    /*
+     * Crea gli oggetti necessari alla gestione del combattimento,
+     * cioè il gestore del combattimento, il gestore dei potenziamenti
+     * e il combattimento vero e proprio.
+     */
     public DatiCombattimentoGioco creaDatiCombattimentoGioco(
             SchermataGioco schermataGioco,
             Button attaccoSquadraButton,
@@ -62,6 +76,11 @@ public class AperturaSchermataGioco {
                 combattimento
         );
     }
+
+    /*
+     * Crea i personaggi della partita,
+     * cioè gli eroi disponibili e i nemici mescolati.
+     */
     public DatiPersonaggiGioco creaPersonaggi(
             ControllerGioco controllerGioco
     ) {
@@ -70,6 +89,12 @@ public class AperturaSchermataGioco {
                 controllerGioco.creaNemiciMescolati()
         );
     }
+
+    /*
+     * Crea i pulsanti principali del combattimento,
+     * cioè il pulsante per l'attacco di squadra
+     * e quello per il potenziamento.
+     */
     public PulsantiCombattimentoGioco creaPulsantiCombattimento(
             GestoreSchermataGioco gestoreSchermataGioco,
             Runnable azioneAttaccoSquadra,
@@ -80,6 +105,12 @@ public class AperturaSchermataGioco {
                 gestoreSchermataGioco.creaPotenzia(azionePotenzia)
         );
     }
+
+    /*
+     * Collega le azioni ai pulsanti della schermata di gioco,
+     * come attaccare, salvare, aprire la mappa,
+     * passare al prossimo incontro o tornare al menu.
+     */
     public void configuraAzioniPulsanti(
             Stage stage,
             GestoreSchermataGioco gestoreSchermataGioco,
@@ -98,6 +129,12 @@ public class AperturaSchermataGioco {
                 azioneTornaMenu
         );
     }
+
+    /*
+     * Configura il layout della schermata di gioco,
+     * inserendo la scelta degli eroi e i pulsanti speciali
+     * del combattimento.
+     */
     public void configuraLayout(
             GestoreSchermataGioco gestoreSchermataGioco,
             Label scegliEroeLabel,
@@ -112,7 +149,4 @@ public class AperturaSchermataGioco {
                 potenziaButton
         );
     }
-
-
-
 }

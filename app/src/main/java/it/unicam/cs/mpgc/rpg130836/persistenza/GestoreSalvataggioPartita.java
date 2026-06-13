@@ -13,6 +13,9 @@ public class GestoreSalvataggioPartita {
     private final ArchivioStatoGioco archivioStatoGioco;
     private final String fileSalvataggio;
 
+    /*
+     * Costruisce un'istanza di GestoreSalvataggioPartita.
+     */
     public GestoreSalvataggioPartita(
             ArchivioStatoGioco archivioStatoGioco,
             String fileSalvataggio
@@ -21,14 +24,23 @@ public class GestoreSalvataggioPartita {
         this.fileSalvataggio = fileSalvataggio;
     }
 
+    /*
+     * Salva i dati nel percorso indicato.
+     */
     public void salva(StatoGioco statoGioco) throws IOException {
         archivioStatoGioco.salva(statoGioco, fileSalvataggio);
     }
 
+    /*
+     * Carica i dati dal percorso indicato.
+     */
     public StatoGioco carica() throws IOException {
         return archivioStatoGioco.carica(fileSalvataggio);
     }
 
+    /*
+     * Trova l'eroe per nome.
+     */
     public Eroe trovaEroePerNome(String nome, List<Eroe> eroi) {
         for (Eroe eroe : eroi) {
             if (eroe.getNome().equals(nome)) {
@@ -38,6 +50,9 @@ public class GestoreSalvataggioPartita {
         return null;
     }
 
+    /*
+     * Trova il nemico per nome.
+     */
     public Nemico trovaNemicoPerNome(String nome, List<Nemico> nemici) {
         for (Nemico nemico : nemici) {
             if (nemico.getNome().equals(nome)) {
@@ -47,6 +62,9 @@ public class GestoreSalvataggioPartita {
         return null;
     }
 
+    /*
+     * Applica la vita caricata.
+     */
     public void applicaVitaCaricata(Combattente combattente, int vitaCaricata) {
         if (combattente == null) {
             return;
